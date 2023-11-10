@@ -48,4 +48,14 @@ export default class Menu {
     });
     return amount;
   }
+
+  static getCategoryByMenu(menu) {
+    let category = '';
+    Object.entries(this.#menu).forEach(([currentCategory, menuList]) => {
+      if (menuList[menu]) {
+        category = currentCategory;
+      }
+    });
+    return category;
+  }
 }
