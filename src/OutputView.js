@@ -15,6 +15,14 @@ const OutputView = {
     Console.print('<증정 메뉴>');
     Console.print(gift);
   },
+  printBenefit(benefit) {
+    Console.print('<혜택 내역>');
+    if (Array.isArray(benefit)) {
+      benefit.forEach(([benefitTitle, discount]) => {
+        Console.print(`${benefitTitle}: ${new Intl.NumberFormat().format(discount)}원`);
+      });
+    } else Console.print(benefit);
+  },
 };
 
 export default OutputView;
