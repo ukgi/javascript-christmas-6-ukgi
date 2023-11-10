@@ -1,4 +1,4 @@
-import Menu from './Menu';
+import Menu from './Menu.js';
 
 export default class Order {
   #menu;
@@ -12,5 +12,9 @@ export default class Order {
 
   getTotalMenuAmount() {
     return Menu.getMenuAmount(this.#menu) * this.#count;
+  }
+
+  getOrderInfo() {
+    return [this.#menu, this.#count];
   }
 }
