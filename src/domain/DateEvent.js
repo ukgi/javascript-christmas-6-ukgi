@@ -23,7 +23,7 @@ export default class DateEvent {
       if (eventName === '주말 할인') discount.push(this.#weekendHandler());
       if (eventName === '특별 할인') discount.push(this.#specialHandler());
     });
-    return discount;
+    return discount.filter(([, discountAmount]) => discountAmount > 0);
   }
 
   #christmasDdayHandler() {
