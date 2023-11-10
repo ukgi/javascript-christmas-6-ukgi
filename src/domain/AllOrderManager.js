@@ -17,6 +17,13 @@ export default class AllOrderManager {
     return this.#allOrders.reduce((acc, cur) => (acc += cur.getTotalMenuAmount()), 0);
   }
 
+  getTotalOrderInfo() {
+    return this.#allOrders.reduce((acc, cur) => {
+      acc.push(cur.getOrderInfo());
+      return acc;
+    }, []);
+  }
+
   #validate(orderMenuTitle, orderMenuCount) {
     if (
       !this.#isAvailable(orderMenuTitle) ||

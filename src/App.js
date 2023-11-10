@@ -1,10 +1,14 @@
 import { Console } from '@woowacourse/mission-utils';
 import InputView from './InputView.js';
-import MenuOrder from './domain/MenuOrder.js';
+import AllOrderManager from './domain/AllOrderManager.js';
+import OutputView from './OutputView.js';
 
 class App {
   async run() {
     const date = await this.#getDate();
+    const { orders, amounts } = await this.#getOrderResult();
+    OutputView.printMenu(orders);
+    OutputView.printAmounts(amounts);
   }
 
   async #getDate() {
@@ -17,10 +21,14 @@ class App {
     }
   }
 
-  async #getOrder() {
+  async #getOrderResult() {
     try {
       const answer = await InputView.readOrder();
-      new MenuOrder(answer);
+      const allOrderManager = new AllOrderManager(answer);
+      return {
+        orders: allOrderManager.getTotalOrderInfo(),
+        amounts: allOrderManager.calculateTotalOrderAmount(),
+      };
     } catch (error) {
       Console.print(error.message);
       return this.#getDate;
