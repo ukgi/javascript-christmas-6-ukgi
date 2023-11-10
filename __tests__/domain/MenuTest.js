@@ -44,4 +44,10 @@ describe('메뉴 테스트', () => {
 
     expect(Menu.getMenuAmount(menu)).toBe(6_000);
   });
+
+  test('메뉴를 전달하면 해당 메뉴의 카테고리를 반환한다.', () => {
+    const menu = '초코케이크';
+
+    expect(Menu.getCategoryByMenu(menu)).toBe('디저트');
+  });
 });
