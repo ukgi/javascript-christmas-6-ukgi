@@ -38,4 +38,14 @@ export default class Menu {
   static getMenuByCategory(category) {
     return Object.entries(this.#menu[category]).map(([menu]) => menu);
   }
+
+  static getMenuAmount(menu) {
+    let amount = 0;
+    Object.values(this.#menu).forEach((currentMenu) => {
+      if (currentMenu[menu]) {
+        amount = currentMenu[menu];
+      }
+    });
+    return amount;
+  }
 }
