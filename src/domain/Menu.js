@@ -34,4 +34,8 @@ export default class Menu {
 
     return menuTitles;
   }
+
+  static getMenuByCategory(category) {
+    return Object.entries(this.#menu[category]).map(([menu]) => menu);
+  }
 }
