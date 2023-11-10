@@ -1,4 +1,5 @@
-import Menu from './Menu';
+import Menu from './Menu.js';
+import Order from './Order.js';
 
 export default class AllOrderManager {
   #allOrders;
@@ -7,7 +8,13 @@ export default class AllOrderManager {
     const orderMenuTitle = order.map(([title]) => title.replace(/\s/g, ''));
     const orderMenuCount = order.map(([, count]) => Number(count));
     this.#validate(orderMenuTitle, orderMenuCount);
-    this.#allOrders = order.map(([menu, count]) => [menu.replace(/\s/g, ''), Number(count)]);
+    this.#allOrders = order.map(
+      ([menu, count]) => new Order(menu.replace(/\s/g, ''), Number(count)),
+    );
+  }
+
+  calculateTotalOrderAmount() {
+    return this.#allOrders.reduce((acc, cur) => (acc += cur.getTotalMenuAmount()), 0);
   }
 
   #validate(orderMenuTitle, orderMenuCount) {
