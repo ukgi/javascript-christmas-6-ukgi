@@ -38,4 +38,10 @@ describe('메뉴 테스트', () => {
   ])('카테고리를 입력하면 해당 카테고리의 메뉴를 반환합니다.', ({ category, expected }) => {
     expect(Menu.getMenuByCategory(category)).toEqual(expected);
   });
+
+  test('메뉴를 전달하면 해당 메뉴의 금액을 반환합니다.', () => {
+    const menu = '양송이수프';
+
+    expect(Menu.getMenuAmount(menu)).toBe(6_000);
+  });
 });
