@@ -1,6 +1,6 @@
 import Menu from './Menu';
 
-export default class MenuOrder {
+export default class AllOrderManager {
   #allOrders;
 
   constructor(order) {

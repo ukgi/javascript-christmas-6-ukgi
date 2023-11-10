@@ -1,4 +1,4 @@
-import MenuOrder from '../../src/domain/MenuOrder';
+import AllOrderManager from '../../src/domain/AllOrderManager';
 
 describe('주문 메뉴 유효성 테스트', () => {
   test('메뉴형식에 맞게 올바르게 주문합니다.', () => {
@@ -9,7 +9,7 @@ describe('주문 메뉴 유효성 테스트', () => {
     ];
 
     expect(() => {
-      new MenuOrder(orders);
+      new AllOrderManager(orders);
     }).not.toThrow();
   });
 
@@ -17,7 +17,7 @@ describe('주문 메뉴 유효성 테스트', () => {
     const order = [['김치찌개', 1]];
 
     expect(() => {
-      new MenuOrder(order);
+      new AllOrderManager(order);
     }).toThrow('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
   });
 
@@ -28,7 +28,7 @@ describe('주문 메뉴 유효성 테스트', () => {
     ];
 
     expect(() => {
-      new MenuOrder(order);
+      new AllOrderManager(order);
     }).toThrow('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
   });
 
@@ -39,13 +39,13 @@ describe('주문 메뉴 유효성 테스트', () => {
     ];
 
     expect(() => {
-      new MenuOrder(order);
+      new AllOrderManager(order);
     }).toThrow('[ERROR] 음료만 주문할 수 없습니다. 다시 입력해 주세요.');
   });
 
   test.each([0, NaN])('주문갯수가 1 이상의 숫자가 아니면 예외처리', (count) => {
     expect(() => {
-      new MenuOrder([['티본스테이크', `${count}`]]);
+      new AllOrderManager([['티본스테이크', `${count}`]]);
     }).toThrow('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
   });
 
@@ -56,7 +56,7 @@ describe('주문 메뉴 유효성 테스트', () => {
     ];
 
     expect(() => {
-      new MenuOrder(order);
+      new AllOrderManager(order);
     }).toThrow('[ERROR] 한번에 주문할 수 있는 갯수는 최대 20개입니다. 다시 입력해 주세요.');
   });
 });
