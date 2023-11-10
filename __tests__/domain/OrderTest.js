@@ -8,4 +8,12 @@ describe('개별 주문 메뉴 테스트', () => {
 
     expect(order.getTotalMenuAmount()).toBe(18_000);
   });
+
+  test('주문한 메뉴이름과 갯수를 반환합니다.', () => {
+    const menu = '양송이수프';
+    const count = 3;
+    const order = new Order(menu, count);
+
+    expect(order.getOrderInfo()).toEqual(['양송이수프', 3]);
+  });
 });
