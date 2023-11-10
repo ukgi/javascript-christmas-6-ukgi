@@ -4,11 +4,22 @@ import AllOrderManager from './domain/AllOrderManager.js';
 import OutputView from './OutputView.js';
 
 class App {
+  #amounts;
+
   async run() {
     const date = await this.#getDate();
     const { orders, amounts } = await this.#getOrderResult();
+    this.#amounts = amounts;
     OutputView.printMenu(orders);
     OutputView.printAmounts(amounts);
+    this.#printGiftWinner();
+  }
+
+  #printGiftWinner() {
+    if (this.#amounts >= 120_000) {
+      return OutputView.printGift('샴페인 1개');
+    }
+    OutputView.printGift('없음');
   }
 
   async #getDate() {
@@ -31,7 +42,7 @@ class App {
       };
     } catch (error) {
       Console.print(error.message);
-      return this.#getDate;
+      return this.#getOrderResult();
     }
   }
 }
