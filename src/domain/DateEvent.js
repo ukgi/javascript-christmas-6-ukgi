@@ -1,4 +1,4 @@
-import Menu from './Menu';
+import Menu from './Menu.js';
 
 export default class DateEvent {
   #date;
@@ -18,16 +18,16 @@ export default class DateEvent {
   #getEventDiscount(event) {
     const discount = [];
     event.forEach((eventName) => {
-      if (eventName === '크리스마스 디데이') discount.push(this.#christmasDdayHandler());
+      if (eventName === '크리스마스 디데이 할인') discount.push(this.#christmasDdayHandler());
       if (eventName === '평일 할인') discount.push(this.#weekdayHandler());
       if (eventName === '주말 할인') discount.push(this.#weekendHandler());
-      if (eventName === '특별한 날') discount.push(this.#specialHandler());
+      if (eventName === '특별 할인') discount.push(this.#specialHandler());
     });
     return discount;
   }
 
   #christmasDdayHandler() {
-    return ['크리스마스 디데이', 1000 + 100 * this.#date - 100];
+    return ['크리스마스 디데이 할인', 1000 + 100 * this.#date - 100];
   }
 
   #weekdayHandler() {
@@ -51,13 +51,13 @@ export default class DateEvent {
   }
 
   #specialHandler() {
-    return ['특별한 날', 1000];
+    return ['특별 할인', 1000];
   }
 
   #getEventByDate() {
     const event = [];
     if (this.#isChristmasDday()) {
-      event.push('크리스마스 디데이');
+      event.push('크리스마스 디데이 할인');
     }
     if (this.#isWeekday()) {
       event.push('평일 할인');
@@ -65,7 +65,7 @@ export default class DateEvent {
       event.push('주말 할인');
     }
     if (this.#isSpecialDay()) {
-      event.push('특별한 날');
+      event.push('특별 할인');
     }
     return event;
   }
