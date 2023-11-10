@@ -60,3 +60,16 @@ describe('주문 메뉴 유효성 테스트', () => {
     }).toThrow('[ERROR] 한번에 주문할 수 있는 갯수는 최대 20개입니다. 다시 입력해 주세요.');
   });
 });
+
+describe('주문 메뉴 전체 총액 테스트', () => {
+  test('주문한 모든 메뉴의 총액을 반환한다.', () => {
+    const orders = [
+      ['해산물파스타', 1],
+      ['레드와인', 1],
+      ['초코케이크', 1],
+    ];
+    const allOrderManager = new AllOrderManager(orders);
+
+    expect(allOrderManager.calculateTotalOrderAmount()).toBe(110_000);
+  });
+});
