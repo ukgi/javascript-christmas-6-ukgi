@@ -4,6 +4,7 @@ import OutputView from './OutputView.js';
 import DateEvent from './DateEvent.js';
 import DateValidator from './DateValidator.js';
 import MenuValidator from './MenuValidator.js';
+import Menu from './lib/Menu.js';
 
 class App {
   #date;
@@ -16,9 +17,8 @@ class App {
 
   async run() {
     this.#date = await this.#getDate();
-    const { orders, amounts } = await this.#getOrderResult();
-    this.#orders = orders;
-    this.#amounts = amounts;
+    this.#orders = await this.#getOrderResult();
+    this.#amounts = this.#getTotalAmount();
     this.#dateEvent = new DateEvent(this.#date, this.#orders);
     OutputView.printMenu(this.#orders);
     OutputView.printAmounts(this.#amounts);
@@ -27,6 +27,14 @@ class App {
     OutputView.printTotalDiscount(this.#calculateTotalDiscount());
     OutputView.printExpectedPaymentAfterBenefits(this.#calculateExpectedPaymentAfterBenefits());
     OutputView.printBadge(this.#assignBadge());
+  }
+
+  #getTotalAmount() {
+    let amount = 0;
+    this.#orders.forEach(([menu, count]) => {
+      amount += Menu.getMenuAmount(menu) * count;
+    });
+    return amount;
   }
 
   #assignBadge() {
