@@ -80,3 +80,16 @@ describe('방문날짜 이벤트 테스트', () => {
     expect(dateEvent.getBenefit()).toEqual([['주말 할인', 2023]]);
   });
 });
+
+describe('총 할인혜택 금액 테스트', () => {
+  test('혜택이 있는 경우 총 혜택금액을 반환합니다.', () => {
+    const date = 4;
+    const order = [
+      ['해산물파스타', 1],
+      ['레드와인', 1],
+      ['초코케이크', 1],
+    ];
+    const dateEvent = new DateEvent(date, order);
+    expect(dateEvent.getTotalDiscount()).toBe(3323);
+  });
+});
