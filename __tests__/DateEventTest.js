@@ -1,4 +1,4 @@
-import DateEvent from '../../src/domain/DateEvent';
+import DateEvent from '../src/DateEvent';
 
 describe('방문날짜 이벤트 테스트', () => {
   test('크리스마스 디데이 할인 + 평일 할인', () => {
