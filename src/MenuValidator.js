@@ -1,4 +1,4 @@
-import Menu from './domain/Menu.js';
+import Menu from './lib/Menu.js';
 
 export default class MenuValidator {
   static validate(menuString) {

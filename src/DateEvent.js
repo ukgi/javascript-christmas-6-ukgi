@@ -1,4 +1,4 @@
-import Menu from './Menu.js';
+import Menu from './lib/Menu.js';
 
 export default class DateEvent {
   #date;

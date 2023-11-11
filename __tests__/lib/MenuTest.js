@@ -1,4 +1,4 @@
-import Menu from '../../src/domain/Menu';
+import Menu from '../../src/lib/Menu';
 
 describe('메뉴 테스트', () => {
   test('메뉴에 있는 모든 메뉴명을 반환합니다.', () => {
