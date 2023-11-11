@@ -13,8 +13,6 @@ class App {
 
   #dateEvent;
 
-  #totalDiscount;
-
   async run() {
     this.#date = await this.#getDate();
     const { orders, amounts } = await this.#getOrderResult();
@@ -26,6 +24,11 @@ class App {
     this.#printGiftWinner();
     this.#printBenefit();
     OutputView.printTotalDiscount(this.#calculateTotalDiscount());
+    OutputView.printExpectedPaymentAfterBenefits(this.#calculateExpectedPaymentAfterBenefits());
+  }
+
+  #calculateExpectedPaymentAfterBenefits() {
+    return this.#amounts - this.#calculateTotalDiscount();
   }
 
   #calculateTotalDiscount() {
