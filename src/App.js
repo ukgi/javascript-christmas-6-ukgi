@@ -25,6 +25,26 @@ class App {
     this.#printBenefit();
     OutputView.printTotalDiscount(this.#calculateTotalDiscount());
     OutputView.printExpectedPaymentAfterBenefits(this.#calculateExpectedPaymentAfterBenefits());
+    OutputView.printBadge(this.#assignBadge());
+  }
+
+  #assignBadge() {
+    let badge = '';
+    const discount = this.#calculateTotalDiscount();
+    if (discount >= 5_000) {
+      badge = '별';
+      return badge;
+    }
+    if (discount >= 10_000) {
+      badge = '트리';
+      return badge;
+    }
+    if (discount >= 20_000) {
+      badge = '산타';
+      return badge;
+    }
+    badge = '없음';
+    return badge;
   }
 
   #calculateExpectedPaymentAfterBenefits() {

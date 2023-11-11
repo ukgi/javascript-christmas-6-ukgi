@@ -31,6 +31,10 @@ const OutputView = {
     Console.print('<할인 후 예상 결제 금액>');
     Console.print(`${new Intl.NumberFormat().format(amount)}원`);
   },
+  printBadge(badge) {
+    Console.print('<12월 이벤트 배지>');
+    Console.print(badge);
+  },
 };
 
 export default OutputView;
