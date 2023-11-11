@@ -6,10 +6,10 @@ export default class MenuValidator {
       throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
     }
     const menuList = menuString.split(',').map((order) => order.split('-'));
-    const menuNameList = menuList.map(([name]) => name.replace(/\s/g, ''));
     const menuCountList = menuList.map(([, count]) => Number(count));
-    this.#validateNameList(menuNameList);
+    const menuNameList = menuList.map(([name]) => name.replace(/\s/g, ''));
     this.#validateCountList(menuCountList);
+    this.#validateNameList(menuNameList);
 
     return menuList.map(([name, count]) => [name.replace(/\s/g, ''), Number(count)]);
   }
