@@ -3,6 +3,7 @@ import InputView from './InputView.js';
 import AllOrderManager from './domain/AllOrderManager.js';
 import OutputView from './OutputView.js';
 import DateEvent from './domain/DateEvent.js';
+import DateValidator from './DateValidator.js';
 
 class App {
   #date;
@@ -87,7 +88,7 @@ class App {
   async #getDate() {
     try {
       const answer = await InputView.readDate();
-      return answer;
+      return DateValidator.validate(answer);
     } catch (error) {
       Console.print(error.message);
       return this.#getDate();
