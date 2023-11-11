@@ -4,6 +4,7 @@ import AllOrderManager from './domain/AllOrderManager.js';
 import OutputView from './OutputView.js';
 import DateEvent from './domain/DateEvent.js';
 import DateValidator from './DateValidator.js';
+import MenuValidator from './MenuValidator.js';
 
 class App {
   #date;
@@ -97,12 +98,8 @@ class App {
 
   async #getOrderResult() {
     try {
-      const answer = await InputView.readOrder();
-      const allOrderManager = new AllOrderManager(answer);
-      return {
-        orders: allOrderManager.getTotalOrderInfo(),
-        amounts: allOrderManager.calculateTotalOrderAmount(),
-      };
+      const answer = await InputView.readMenu();
+      return MenuValidator.validate(answer);
     } catch (error) {
       Console.print(error.message);
       return this.#getOrderResult();
