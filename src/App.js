@@ -11,22 +11,37 @@ class App {
 
   #amounts;
 
+  #dateEvent;
+
+  #totalDiscount;
+
   async run() {
     this.#date = await this.#getDate();
     const { orders, amounts } = await this.#getOrderResult();
     this.#orders = orders;
     this.#amounts = amounts;
+    this.#dateEvent = new DateEvent(this.#date, this.#orders);
     OutputView.printMenu(this.#orders);
     OutputView.printAmounts(this.#amounts);
     this.#printGiftWinner();
     this.#printBenefit();
+    OutputView.printTotalDiscount(this.#calculateTotalDiscount());
+  }
+
+  #calculateTotalDiscount() {
+    const discountByEvent = this.#dateEvent.getTotalDiscount();
+    if (this.#isGiftWinner()) {
+      const totalDiscount = discountByEvent + 25_000;
+      return totalDiscount;
+    }
+    return discountByEvent;
   }
 
   #printBenefit() {
     if (this.#amounts < 10_000) {
       return OutputView.printBenefit('없음');
     }
-    const benefitByDate = new DateEvent(this.#date, this.#orders).getBenefit();
+    const benefitByDate = this.#dateEvent.getBenefit();
     const benefit = [...benefitByDate];
     if (this.#isGiftWinner()) {
       benefit.push(['증정 이벤트', 25_000]);

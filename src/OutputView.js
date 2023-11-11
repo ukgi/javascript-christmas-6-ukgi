@@ -23,6 +23,10 @@ const OutputView = {
       });
     } else Console.print(benefit);
   },
+  printTotalDiscount(totalDiscount) {
+    Console.print('<총혜택 금액>');
+    Console.print(`${new Intl.NumberFormat().format(totalDiscount)}원`);
+  },
 };
 
 export default OutputView;

@@ -12,10 +12,19 @@ export default class DateEvent {
 
   getBenefit() {
     const event = this.#getEventByDate();
-    return this.#getEventDiscount(event);
+    return this.#getBenefitDetails(event);
   }
 
-  #getEventDiscount(event) {
+  getTotalDiscount() {
+    let totalDiscount = 0;
+    const benefitDetails = this.getBenefit();
+    benefitDetails.forEach(([, discount]) => {
+      totalDiscount += discount;
+    });
+    return totalDiscount;
+  }
+
+  #getBenefitDetails(event) {
     const discount = [];
     event.forEach((eventName) => {
       if (eventName === '크리스마스 디데이 할인') discount.push(this.#christmasDdayHandler());
