@@ -66,13 +66,12 @@ export default class EventPlannerController {
       date,
       menu,
     );
-    // 🐛FIX
-    totalBenefit.forEach(([eventName]) => {
-      if (eventName === '증정 이벤트') {
-        return OutputView.printGift('샴페인 1개');
-      }
-      return OutputView.printGift('없음');
-    });
+    if (totalBenefit.find(([eventName]) => eventName === '증정 이벤트')) {
+      OutputView.printGift('샴페인 1개');
+    } else {
+      OutputView.printGift('없음');
+    }
+
     return { totalBenefit, totalDiscount };
   }
 
