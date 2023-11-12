@@ -1,4 +1,4 @@
-import MenuValidator from '../src/MenuValidator';
+import MenuValidator from '../../src/validate/MenuValidator';
 
 describe('주문 메뉴 유효성 테스트', () => {
   test('메뉴형식에 맞게 올바르게 주문합니다.', () => {

@@ -1,8 +1,8 @@
 import { Console } from '@woowacourse/mission-utils';
 import InputView from '../view/InputView.js';
 import OutputView from '../view/OutputView.js';
-import DateValidator from '../DateValidator.js';
-import MenuValidator from '../MenuValidator.js';
+import DateValidator from '../validate/DateValidator.js';
+import MenuValidator from '../validate/MenuValidator.js';
 import MenuManager from '../lib/MenuManager.js';
 
 export default class EventPlannerController {

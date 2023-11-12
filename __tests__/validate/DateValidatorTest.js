@@ -1,4 +1,4 @@
-import DateValidator from '../src/DateValidator';
+import DateValidator from '../../src/validate/DateValidator';
 
 describe('방문날짜 유효성 검사 테스트', () => {
   test.each(['1', '15', '31'])('방문날짜는 1이상 31이하의 수입니다.', (date) => {
