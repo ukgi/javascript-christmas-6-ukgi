@@ -22,9 +22,7 @@ export default class BenefitCalculator {
 
   #getTotalBenefit(date, menu, amount) {
     const totalBenefit = [];
-    if (amount >= 120_000) {
-      totalBenefit.push(['증정 이벤트', 25_000]);
-    }
+    if (amount >= 120_000) totalBenefit.push(['증정 이벤트', 25_000]);
     const event = this.#getEventByDate(date);
     const benefitByDate = this.#getBenefitByDate(date, menu, event);
     benefitByDate.forEach((benefit) => {
@@ -77,17 +75,11 @@ export default class BenefitCalculator {
 
   #getEventByDate(date) {
     const event = [];
-    if (this.#isChristmasDday(date)) {
-      event.push('크리스마스 디데이 할인');
-    }
-    if (this.#isWeekday(date)) {
-      event.push('평일 할인');
-    } else {
-      event.push('주말 할인');
-    }
-    if (this.#isSpecialDay(date)) {
-      event.push('특별 할인');
-    }
+    if (this.#isChristmasDday(date)) event.push('크리스마스 디데이 할인');
+    if (this.#isWeekday(date)) event.push('평일 할인');
+    else event.push('주말 할인');
+    if (this.#isSpecialDay(date)) event.push('특별 할인');
+
     return event;
   }
 
