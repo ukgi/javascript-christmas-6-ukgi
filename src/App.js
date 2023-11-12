@@ -1,4 +1,4 @@
-import OrderManager from './OrderManager';
+import OrderManager from './OrderManager.js';
 
 class App {
   async run() {

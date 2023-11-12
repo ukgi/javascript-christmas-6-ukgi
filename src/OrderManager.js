@@ -7,90 +7,59 @@ import MenuValidator from './MenuValidator.js';
 import Menu from './lib/Menu.js';
 
 export default class OrderManager {
-  #date;
-
-  #menu;
-
-  #amounts;
-
-  #dateEvent;
-
   async order() {
-    this.#date = await this.#getDate();
-    this.#menu = await this.#getMenu();
-    this.#amounts = this.#getTotalAmount();
-    this.#dateEvent = new DateEvent(this.#date, this.#menu);
-    OutputView.printMenu(this.#menu);
-    OutputView.printAmounts(this.#amounts);
-    this.#printGiftWinner();
-    this.#printBenefit();
-    OutputView.printTotalDiscount(this.#calculateTotalDiscount());
-    OutputView.printExpectedPaymentAfterBenefits(this.#calculateExpectedPaymentAfterBenefits());
-    OutputView.printBadge(this.#assignBadge());
+    const date = await this.#getDate();
+    const menu = await this.#getMenu();
+    const totalAmount = this.#getTotalAmount(menu);
+    OutputView.printMenu(menu);
+    OutputView.printAmounts(totalAmount);
+
+    this.#totalBenefitHandler(date, menu, totalAmount);
   }
 
-  #getTotalAmount() {
+  #totalBenefitHandler(date, menu, totalAmount) {
+    const totalBenefit = [];
+    let gift = '없음';
+    if (totalAmount < 10_000) {
+      OutputView.printGift(gift);
+      OutputView.printBenefit(totalBenefit);
+    }
+    if (totalAmount >= 120_000) {
+      gift = '샴페인 1개';
+      totalBenefit.push(['증정 이벤트', 25_000]);
+    }
+    const benefitByDate = new DateEvent(date, menu).getBenefit();
+    benefitByDate.forEach((benfit) => totalBenefit.push(benfit));
+    this.#totalDiscountHandler(totalBenefit, totalAmount);
+
+    OutputView.printGift(gift);
+    OutputView.printBenefit(totalBenefit);
+  }
+
+  #totalDiscountHandler(totalBenefit, totalAmount) {
+    let totalDiscount = 0;
+    totalBenefit.forEach(([, amount]) => {
+      totalDiscount += amount;
+    });
+    const amountAfterBenefit = totalAmount - totalDiscount;
+    const badge = this.#badgeHandler(totalDiscount);
+    OutputView.printTotalDiscount(totalDiscount);
+    OutputView.printAmountAfterBenefit(amountAfterBenefit);
+    OutputView.printBadge(badge);
+  }
+
+  #badgeHandler(totalDiscount) {
+    if (totalDiscount >= 5000) '별';
+    if (totalDiscount >= 10_000) '트리';
+    if (totalDiscount >= 20_000) '산타';
+  }
+
+  #getTotalAmount(menu) {
     let amount = 0;
-    this.#menu.forEach(([menu, count]) => {
-      amount += Menu.getMenuAmount(menu) * count;
+    menu.forEach(([menuName, count]) => {
+      amount += Menu.getMenuAmount(menuName) * count;
     });
     return amount;
-  }
-
-  #assignBadge() {
-    let badge = '';
-    const discount = this.#calculateTotalDiscount();
-    if (discount >= 5_000) {
-      badge = '별';
-      return badge;
-    }
-    if (discount >= 10_000) {
-      badge = '트리';
-      return badge;
-    }
-    if (discount >= 20_000) {
-      badge = '산타';
-      return badge;
-    }
-    badge = '없음';
-    return badge;
-  }
-
-  #calculateExpectedPaymentAfterBenefits() {
-    return this.#amounts - this.#calculateTotalDiscount();
-  }
-
-  #calculateTotalDiscount() {
-    const discountByEvent = this.#dateEvent.getTotalDiscount();
-    if (this.#isGiftWinner()) {
-      const totalDiscount = discountByEvent + 25_000;
-      return totalDiscount;
-    }
-    return discountByEvent;
-  }
-
-  #printBenefit() {
-    if (this.#amounts < 10_000) {
-      return OutputView.printBenefit('없음');
-    }
-    const benefitByDate = this.#dateEvent.getBenefit();
-    const benefit = [...benefitByDate];
-    if (this.#isGiftWinner()) {
-      benefit.push(['증정 이벤트', 25_000]);
-      return OutputView.printBenefit(benefit);
-    }
-    return OutputView.printBenefit(benefit);
-  }
-
-  #printGiftWinner() {
-    if (this.#isGiftWinner()) {
-      return OutputView.printGift('샴페인 1개');
-    }
-    OutputView.printGift('없음');
-  }
-
-  #isGiftWinner() {
-    return this.#amounts >= 120_000;
   }
 
   async #getDate() {
