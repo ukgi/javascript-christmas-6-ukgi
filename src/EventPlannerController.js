@@ -8,45 +8,24 @@ import MenuManager from './lib/MenuManager.js';
 
 export default class EventPlannerController {
   async start() {
-    const date = await this.#getDate();
-    const menu = await this.#getMenu();
-    const totalAmount = this.#getTotalAmount(menu);
+    const { date, menu, totalAmount } = await this.#order();
     OutputView.printMenu(menu);
     OutputView.printAmounts(totalAmount);
 
-    this.#totalBenefitHandler(date, menu, totalAmount);
-  }
-
-  #totalBenefitHandler(date, menu, totalAmount) {
-    const { totalBenefit, totalDiscount } = new DateEvent(date, menu).getBenefit();
-    totalBenefit.forEach(([event]) => {
-      event === '증정 이벤트' ? OutputView.printGift('샴페인 1개') : OutputView.printGift('없음');
-    });
+    const { totalBenefit, totalDiscount } = this.#getTotalBenefit(date, menu);
     OutputView.printBenefit(totalBenefit);
     OutputView.printTotalDiscount(totalDiscount);
-    this.#totalDiscountHandler(totalAmount, totalDiscount);
-  }
+    OutputView.printAmountAfterBenefit(totalAmount - totalDiscount);
 
-  #totalDiscountHandler(totalAmount, totalDiscount) {
-    const amountAfterBenefit = totalAmount - totalDiscount;
-    const badge = this.#badgeHandler(totalDiscount);
-    OutputView.printTotalDiscount(totalDiscount);
-    OutputView.printAmountAfterBenefit(amountAfterBenefit);
+    const badge = this.#getBadge(totalDiscount);
     OutputView.printBadge(badge);
   }
 
-  #badgeHandler(totalDiscount) {
-    if (totalDiscount >= 5000) '별';
-    if (totalDiscount >= 10_000) '트리';
-    if (totalDiscount >= 20_000) '산타';
-  }
-
-  #getTotalAmount(menu) {
-    let amount = 0;
-    menu.forEach(([menuName, count]) => {
-      amount += MenuManager.getMenuAmount(menuName) * count;
-    });
-    return amount;
+  async #order() {
+    const date = await this.#getDate();
+    const menu = await this.#getMenu();
+    const totalAmount = this.#getTotalAmount(menu);
+    return { date, menu, totalAmount };
   }
 
   async #getDate() {
@@ -67,5 +46,31 @@ export default class EventPlannerController {
       Console.print(error.message);
       return this.#getMenu();
     }
+  }
+
+  #getTotalAmount(menu) {
+    let amount = 0;
+    menu.forEach(([menuName, count]) => {
+      amount += MenuManager.getMenuAmount(menuName) * count;
+    });
+    return amount;
+  }
+
+  #getTotalBenefit(date, menu) {
+    const { totalBenefit, totalDiscount } = new DateEvent(date, menu).calculateTotalBenefit();
+    totalBenefit.forEach(([eventName]) => {
+      if (eventName === '증정 이벤트') {
+        return OutputView.printGift('샴페인 1개');
+      }
+      return OutputView.printGift('없음');
+    });
+    return { totalBenefit, totalDiscount };
+  }
+
+  #getBadge(totalDiscount) {
+    if (totalDiscount >= 5000) '별';
+    if (totalDiscount >= 10_000) '트리';
+    if (totalDiscount >= 20_000) '산타';
+    return '없음';
   }
 }
