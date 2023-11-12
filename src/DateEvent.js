@@ -11,17 +11,42 @@ export default class DateEvent {
   }
 
   getBenefit() {
-    const event = this.#getEventByDate();
-    return this.#getBenefitDetails(event);
+    const amount = this.#getTotalAmount();
+    if (amount >= 10_000) {
+      const totalBenefit = this.#calculateBenefit(amount);
+      const totalDiscount = this.#calculateDiscount(totalBenefit);
+      return { totalBenefit, totalDiscount };
+    }
+    return { totalBenefit: [], totalDiscount: 0 };
   }
 
-  getTotalDiscount() {
+  #calculateDiscount(totalBenefit) {
     let totalDiscount = 0;
-    const benefitDetails = this.getBenefit();
-    benefitDetails.forEach(([, discount]) => {
-      totalDiscount += discount;
+    totalBenefit.forEach(([, amount]) => {
+      totalDiscount += amount;
     });
     return totalDiscount;
+  }
+
+  #calculateBenefit(amount) {
+    const totalBenefit = [];
+    if (amount >= 120_000) {
+      totalBenefit.push(['증정 이벤트', 25_000]);
+    }
+    const event = this.#getEventByDate();
+    const benefitByDate = this.#getBenefitDetails(event);
+    benefitByDate.forEach((benefit) => {
+      totalBenefit.push(benefit);
+    });
+    return totalBenefit;
+  }
+
+  #getTotalAmount() {
+    let amount = 0;
+    this.#order.forEach(([menuName, count]) => {
+      amount += MenuManager.getMenuAmount(menuName) * count;
+    });
+    return amount;
   }
 
   #getBenefitDetails(event) {
