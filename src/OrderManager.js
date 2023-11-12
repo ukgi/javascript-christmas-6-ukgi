@@ -1,6 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
-import InputView from './InputView.js';
-import OutputView from './OutputView.js';
+import InputView from './view/InputView.js';
+import OutputView from './view/OutputView.js';
 import DateEvent from './DateEvent.js';
 import DateValidator from './DateValidator.js';
 import MenuValidator from './MenuValidator.js';
