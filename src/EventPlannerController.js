@@ -6,8 +6,8 @@ import DateValidator from './DateValidator.js';
 import MenuValidator from './MenuValidator.js';
 import MenuManager from './lib/MenuManager.js';
 
-export default class OrderManager {
-  async order() {
+export default class EventPlannerController {
+  async start() {
     const date = await this.#getDate();
     const menu = await this.#getMenu();
     const totalAmount = this.#getTotalAmount(menu);

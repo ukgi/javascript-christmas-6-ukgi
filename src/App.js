@@ -1,8 +1,8 @@
-import OrderManager from './OrderManager.js';
+import EventPlannerController from './EventPlannerController';
 
 class App {
   async run() {
-    await new OrderManager().order();
+    await new EventPlannerController().start();
   }
 }
 
