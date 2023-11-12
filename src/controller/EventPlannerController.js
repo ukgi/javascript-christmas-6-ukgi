@@ -1,9 +1,9 @@
 import { Console } from '@woowacourse/mission-utils';
-import InputView from './view/InputView.js';
-import OutputView from './view/OutputView.js';
-import DateValidator from './DateValidator.js';
-import MenuValidator from './MenuValidator.js';
-import MenuManager from './lib/MenuManager.js';
+import InputView from '../view/InputView.js';
+import OutputView from '../view/OutputView.js';
+import DateValidator from '../DateValidator.js';
+import MenuValidator from '../MenuValidator.js';
+import MenuManager from '../lib/MenuManager.js';
 
 export default class EventPlannerController {
   #benefitCalculator;
@@ -31,6 +31,7 @@ export default class EventPlannerController {
     const date = await this.#getDate();
     const menu = await this.#getMenu();
     const totalAmount = this.#getTotalAmount(menu);
+
     return { date, menu, totalAmount };
   }
 
@@ -59,6 +60,7 @@ export default class EventPlannerController {
     menu.forEach(([menuName, count]) => {
       amount += MenuManager.getMenuAmount(menuName) * count;
     });
+
     return amount;
   }
 
@@ -68,23 +70,15 @@ export default class EventPlannerController {
       date,
       menu,
     );
-    if (totalBenefit.find(([eventName]) => eventName === '증정 이벤트')) {
-      gift = '샴페인 1개';
-    }
+    if (totalBenefit.find(([eventName]) => eventName === '증정 이벤트')) gift = '샴페인 1개';
 
     return { totalBenefit, totalDiscount, gift };
   }
 
   #getBadge(totalDiscount) {
-    if (totalDiscount >= 5000 && totalDiscount < 10_000) {
-      return '별';
-    }
-    if (totalDiscount >= 10_000 && totalDiscount < 20_000) {
-      return '트리';
-    }
-    if (totalDiscount >= 20_000) {
-      return '산타';
-    }
+    if (totalDiscount >= 5000 && totalDiscount < 10_000) return '별';
+    if (totalDiscount >= 10_000 && totalDiscount < 20_000) return '트리';
+    if (totalDiscount >= 20_000) return '산타';
     return '없음';
   }
 }
