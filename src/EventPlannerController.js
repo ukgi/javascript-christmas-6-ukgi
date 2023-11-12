@@ -17,7 +17,8 @@ export default class EventPlannerController {
     OutputView.printMenu(menu);
     OutputView.printAmounts(totalAmount);
 
-    const { totalBenefit, totalDiscount } = this.#getTotalBenefit(date, menu);
+    const { totalBenefit, totalDiscount, gift } = this.#getTotalBenefit(date, menu);
+    OutputView.printGift(gift);
     OutputView.printBenefit(totalBenefit);
     OutputView.printTotalDiscount(totalDiscount);
     OutputView.printAmountAfterBenefit(totalAmount - totalDiscount);
@@ -62,17 +63,16 @@ export default class EventPlannerController {
   }
 
   #getTotalBenefit(date, menu) {
+    let gift = '';
     const { totalBenefit, totalDiscount } = this.#benefitCalculator.calculateTotalBenefit(
       date,
       menu,
     );
     if (totalBenefit.find(([eventName]) => eventName === '증정 이벤트')) {
-      OutputView.printGift('샴페인 1개');
-    } else {
-      OutputView.printGift('없음');
+      gift = '샴페인 1개';
     }
 
-    return { totalBenefit, totalDiscount };
+    return { totalBenefit, totalDiscount, gift };
   }
 
   #getBadge(totalDiscount) {

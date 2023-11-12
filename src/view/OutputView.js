@@ -13,7 +13,10 @@ const OutputView = {
   },
   printGift(gift) {
     Console.print('<증정 메뉴>');
-    Console.print(gift);
+    if (gift) {
+      return Console.print(gift);
+    }
+    return Console.print('없음');
   },
   printBenefit(benefit) {
     Console.print('<혜택 내역>');
