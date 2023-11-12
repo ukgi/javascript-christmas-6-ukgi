@@ -66,6 +66,7 @@ export default class EventPlannerController {
       date,
       menu,
     );
+    // 🐛FIX
     totalBenefit.forEach(([eventName]) => {
       if (eventName === '증정 이벤트') {
         return OutputView.printGift('샴페인 1개');
@@ -76,9 +77,15 @@ export default class EventPlannerController {
   }
 
   #getBadge(totalDiscount) {
-    if (totalDiscount >= 5000) '별';
-    if (totalDiscount >= 10_000) '트리';
-    if (totalDiscount >= 20_000) '산타';
+    if (totalDiscount >= 5000 && totalDiscount < 10_000) {
+      return '별';
+    }
+    if (totalDiscount >= 10_000 && totalDiscount < 20_000) {
+      return '트리';
+    }
+    if (totalDiscount >= 20_000) {
+      return '산타';
+    }
     return '없음';
   }
 }
