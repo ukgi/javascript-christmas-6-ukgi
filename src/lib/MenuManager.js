@@ -1,4 +1,4 @@
-export default class Menu {
+export default class MenuManager {
   static #menu = {
     애피타이저: {
       양송이수프: 6_000,

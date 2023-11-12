@@ -1,4 +1,4 @@
-import Menu from './lib/Menu.js';
+import MenuManager from './lib/MenuManager.js';
 
 export default class DateEvent {
   #date;
@@ -42,7 +42,7 @@ export default class DateEvent {
   #weekdayHandler() {
     let discount = 0;
     this.#order.forEach(([menu, count]) => {
-      if (Menu.getCategoryByMenu(menu) === '디저트') {
+      if (MenuManager.getCategoryByMenu(menu) === '디저트') {
         discount += 2023 * count;
       }
     });
@@ -52,7 +52,7 @@ export default class DateEvent {
   #weekendHandler() {
     let discount = 0;
     this.#order.forEach(([menu, count]) => {
-      if (Menu.getCategoryByMenu(menu) === '메인') {
+      if (MenuManager.getCategoryByMenu(menu) === '메인') {
         discount += 2023 * count;
       }
     });

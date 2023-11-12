@@ -1,4 +1,4 @@
-import Menu from './lib/Menu.js';
+import MenuManager from './lib/MenuManager.js';
 
 export default class MenuValidator {
   static validate(menuString) {
@@ -39,7 +39,7 @@ export default class MenuValidator {
   }
 
   static #isAvailable(nameList) {
-    const allMenuTitle = Menu.getOnlyMenuTitle();
+    const allMenuTitle = MenuManager.getOnlyMenuTitle();
     return nameList.every((orderMenu) => allMenuTitle.includes(orderMenu));
   }
 
@@ -48,7 +48,7 @@ export default class MenuValidator {
   }
 
   static #isOnlyOrderBeverage(nameList) {
-    const beverages = Menu.getMenuByCategory('음료');
+    const beverages = MenuManager.getMenuByCategory('음료');
     return nameList.every((menu) => beverages.includes(menu));
   }
 

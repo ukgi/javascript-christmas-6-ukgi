@@ -4,7 +4,7 @@ import OutputView from './OutputView.js';
 import DateEvent from './DateEvent.js';
 import DateValidator from './DateValidator.js';
 import MenuValidator from './MenuValidator.js';
-import Menu from './lib/Menu.js';
+import MenuManager from './lib/MenuManager.js';
 
 export default class OrderManager {
   async order() {
@@ -57,7 +57,7 @@ export default class OrderManager {
   #getTotalAmount(menu) {
     let amount = 0;
     menu.forEach(([menuName, count]) => {
-      amount += Menu.getMenuAmount(menuName) * count;
+      amount += MenuManager.getMenuAmount(menuName) * count;
     });
     return amount;
   }

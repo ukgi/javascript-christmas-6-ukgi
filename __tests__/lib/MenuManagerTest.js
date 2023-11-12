@@ -1,8 +1,8 @@
-import Menu from '../../src/lib/Menu';
+import MenuManager from '../../src/lib/MenuManager';
 
 describe('메뉴 테스트', () => {
   test('메뉴에 있는 모든 메뉴명을 반환합니다.', () => {
-    expect(Menu.getOnlyMenuTitle()).toEqual([
+    expect(MenuManager.getOnlyMenuTitle()).toEqual([
       '양송이수프',
       '타파스',
       '시저샐러드',
@@ -36,18 +36,18 @@ describe('메뉴 테스트', () => {
       expected: ['제로콜라', '레드와인', '샴페인'],
     },
   ])('카테고리를 입력하면 해당 카테고리의 메뉴를 반환합니다.', ({ category, expected }) => {
-    expect(Menu.getMenuByCategory(category)).toEqual(expected);
+    expect(MenuManager.getMenuByCategory(category)).toEqual(expected);
   });
 
   test('메뉴를 전달하면 해당 메뉴의 금액을 반환합니다.', () => {
     const menu = '양송이수프';
 
-    expect(Menu.getMenuAmount(menu)).toBe(6_000);
+    expect(MenuManager.getMenuAmount(menu)).toBe(6_000);
   });
 
   test('메뉴를 전달하면 해당 메뉴의 카테고리를 반환한다.', () => {
     const menu = '초코케이크';
 
-    expect(Menu.getCategoryByMenu(menu)).toBe('디저트');
+    expect(MenuManager.getCategoryByMenu(menu)).toBe('디저트');
   });
 });
