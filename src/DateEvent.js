@@ -10,7 +10,7 @@ export default class DateEvent {
     this.#order = order;
   }
 
-  getBenefit() {
+  calculateTotalBenefit() {
     const amount = this.#getTotalAmount();
     if (amount >= 10_000) {
       const totalBenefit = this.#calculateBenefit(amount);
