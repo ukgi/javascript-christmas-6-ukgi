@@ -1,6 +1,6 @@
 import MenuManager from './lib/MenuManager.js';
 
-export default class DateEvent {
+export default class BenefitCalculator {
   #date;
 
   #order;

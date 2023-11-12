@@ -1,4 +1,4 @@
-import DateEvent from '../src/DateEvent';
+import BenefitCalculator from '../src/BenefitCalculator';
 // 📌테스트코드 수정부터!
 describe('방문날짜 이벤트 테스트', () => {
   test('크리스마스 디데이 할인 + 평일 할인', () => {
@@ -8,7 +8,7 @@ describe('방문날짜 이벤트 테스트', () => {
       ['레드와인', 1],
       ['초코케이크', 1],
     ];
-    const dateEvent = new DateEvent(date, order);
+    const dateEvent = new BenefitCalculator(date, order);
 
     expect(dateEvent.calculateTotalBenefit()).toEqual({
       totalBenefit: [
@@ -26,7 +26,7 @@ describe('방문날짜 이벤트 테스트', () => {
       ['레드와인', 1],
       ['초코케이크', 1],
     ];
-    const dateEvent = new DateEvent(date, order);
+    const dateEvent = new BenefitCalculator(date, order);
 
     expect(dateEvent.calculateTotalBenefit()).toEqual({
       totalBenefit: [
@@ -45,7 +45,7 @@ describe('방문날짜 이벤트 테스트', () => {
       ['레드와인', 1],
       ['초코케이크', 1],
     ];
-    const dateEvent = new DateEvent(date, order);
+    const dateEvent = new BenefitCalculator(date, order);
 
     expect(dateEvent.calculateTotalBenefit()).toEqual({
       totalBenefit: [
@@ -63,7 +63,7 @@ describe('방문날짜 이벤트 테스트', () => {
       ['레드와인', 1],
       ['초코케이크', 1],
     ];
-    const dateEvent = new DateEvent(date, order);
+    const dateEvent = new BenefitCalculator(date, order);
 
     expect(dateEvent.calculateTotalBenefit()).toEqual({
       totalBenefit: [['평일 할인', 2023]],
@@ -78,7 +78,7 @@ describe('방문날짜 이벤트 테스트', () => {
       ['레드와인', 1],
       ['초코케이크', 1],
     ];
-    const dateEvent = new DateEvent(date, order);
+    const dateEvent = new BenefitCalculator(date, order);
 
     expect(dateEvent.calculateTotalBenefit()).toEqual({
       totalBenefit: [
@@ -96,7 +96,7 @@ describe('방문날짜 이벤트 테스트', () => {
       ['레드와인', 1],
       ['초코케이크', 1],
     ];
-    const dateEvent = new DateEvent(date, order);
+    const dateEvent = new BenefitCalculator(date, order);
 
     expect(dateEvent.calculateTotalBenefit()).toEqual({
       totalBenefit: [['주말 할인', 2023]],
@@ -110,7 +110,7 @@ describe('방문날짜 이벤트 테스트', () => {
       ['타파스', 1],
       ['시저샐러드', 1],
     ];
-    const dateEvent = new DateEvent(date, order);
+    const dateEvent = new BenefitCalculator(date, order);
 
     expect(dateEvent.calculateTotalBenefit()).toEqual({
       totalBenefit: [],
