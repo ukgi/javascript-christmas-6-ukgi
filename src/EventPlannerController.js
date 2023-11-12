@@ -1,12 +1,17 @@
 import { Console } from '@woowacourse/mission-utils';
 import InputView from './view/InputView.js';
 import OutputView from './view/OutputView.js';
-import BenefitCalculator from './BenefitCalculator.js';
 import DateValidator from './DateValidator.js';
 import MenuValidator from './MenuValidator.js';
 import MenuManager from './lib/MenuManager.js';
 
 export default class EventPlannerController {
+  #benefitCalculator;
+
+  constructor(benefitCalculator) {
+    this.#benefitCalculator = benefitCalculator;
+  }
+
   async start() {
     const { date, menu, totalAmount } = await this.#order();
     OutputView.printMenu(menu);
@@ -57,10 +62,10 @@ export default class EventPlannerController {
   }
 
   #getTotalBenefit(date, menu) {
-    const { totalBenefit, totalDiscount } = new BenefitCalculator(
+    const { totalBenefit, totalDiscount } = this.#benefitCalculator.calculateTotalBenefit(
       date,
       menu,
-    ).calculateTotalBenefit();
+    );
     totalBenefit.forEach(([eventName]) => {
       if (eventName === '증정 이벤트') {
         return OutputView.printGift('샴페인 1개');

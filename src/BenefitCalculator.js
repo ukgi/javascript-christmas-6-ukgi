@@ -1,26 +1,18 @@
 import MenuManager from './lib/MenuManager.js';
 
 export default class BenefitCalculator {
-  #date;
-
-  #order;
-
-  constructor(date, order) {
-    this.#date = date;
-    this.#order = order;
-  }
-
-  calculateTotalBenefit() {
-    const amount = this.#getTotalAmount();
+  // 총 혜택내역을 계산해서 반환하는 외부인터페이스
+  calculateTotalBenefit(date, menu) {
+    const amount = this.#getTotalAmount(menu);
     if (amount >= 10_000) {
-      const totalBenefit = this.#calculateBenefit(amount);
-      const totalDiscount = this.#calculateDiscount(totalBenefit);
+      const totalBenefit = this.#getTotalBenefit(date, menu, amount);
+      const totalDiscount = this.#getTotalDiscount(totalBenefit);
       return { totalBenefit, totalDiscount };
     }
     return { totalBenefit: [], totalDiscount: 0 };
   }
 
-  #calculateDiscount(totalBenefit) {
+  #getTotalDiscount(totalBenefit) {
     let totalDiscount = 0;
     totalBenefit.forEach(([, amount]) => {
       totalDiscount += amount;
@@ -28,56 +20,56 @@ export default class BenefitCalculator {
     return totalDiscount;
   }
 
-  #calculateBenefit(amount) {
+  #getTotalBenefit(date, menu, amount) {
     const totalBenefit = [];
     if (amount >= 120_000) {
       totalBenefit.push(['증정 이벤트', 25_000]);
     }
-    const event = this.#getEventByDate();
-    const benefitByDate = this.#getBenefitDetails(event);
+    const event = this.#getEventByDate(date);
+    const benefitByDate = this.#getBenefitByDate(date, menu, event);
     benefitByDate.forEach((benefit) => {
       totalBenefit.push(benefit);
     });
     return totalBenefit;
   }
 
-  #getTotalAmount() {
+  #getTotalAmount(menu) {
     let amount = 0;
-    this.#order.forEach(([menuName, count]) => {
+    menu.forEach(([menuName, count]) => {
       amount += MenuManager.getMenuAmount(menuName) * count;
     });
     return amount;
   }
 
-  #getBenefitDetails(event) {
+  #getBenefitByDate(date, menu, event) {
     const discount = [];
     event.forEach((eventName) => {
-      if (eventName === '크리스마스 디데이 할인') discount.push(this.#christmasDdayHandler());
-      if (eventName === '평일 할인') discount.push(this.#weekdayHandler());
-      if (eventName === '주말 할인') discount.push(this.#weekendHandler());
+      if (eventName === '크리스마스 디데이 할인') discount.push(this.#christmasDdayHandler(date));
+      if (eventName === '평일 할인') discount.push(this.#weekdayHandler(menu));
+      if (eventName === '주말 할인') discount.push(this.#weekendHandler(menu));
       if (eventName === '특별 할인') discount.push(this.#specialHandler());
     });
     return discount.filter(([, discountAmount]) => discountAmount > 0);
   }
 
-  #christmasDdayHandler() {
-    return ['크리스마스 디데이 할인', 1000 + 100 * this.#date - 100];
+  #christmasDdayHandler(date) {
+    return ['크리스마스 디데이 할인', 1000 + 100 * date - 100];
   }
 
-  #weekdayHandler() {
+  #weekdayHandler(menu) {
     let discount = 0;
-    this.#order.forEach(([menu, count]) => {
-      if (MenuManager.getCategoryByMenu(menu) === '디저트') {
+    menu.forEach(([menuName, count]) => {
+      if (MenuManager.getCategoryByMenu(menuName) === '디저트') {
         discount += 2023 * count;
       }
     });
     return ['평일 할인', discount];
   }
 
-  #weekendHandler() {
+  #weekendHandler(menu) {
     let discount = 0;
-    this.#order.forEach(([menu, count]) => {
-      if (MenuManager.getCategoryByMenu(menu) === '메인') {
+    menu.forEach(([menuName, count]) => {
+      if (MenuManager.getCategoryByMenu(menuName) === '메인') {
         discount += 2023 * count;
       }
     });
@@ -88,35 +80,35 @@ export default class BenefitCalculator {
     return ['특별 할인', 1000];
   }
 
-  #getEventByDate() {
+  #getEventByDate(date) {
     const event = [];
-    if (this.#isChristmasDday()) {
+    if (this.#isChristmasDday(date)) {
       event.push('크리스마스 디데이 할인');
     }
-    if (this.#isWeekday()) {
+    if (this.#isWeekday(date)) {
       event.push('평일 할인');
     } else {
       event.push('주말 할인');
     }
-    if (this.#isSpecialDay()) {
+    if (this.#isSpecialDay(date)) {
       event.push('특별 할인');
     }
     return event;
   }
 
-  #isChristmasDday() {
-    return this.#date >= 1 && this.#date <= 25;
+  #isChristmasDday(date) {
+    return date >= 1 && date <= 25;
   }
 
-  #isWeekday() {
+  #isWeekday(date) {
     const days = ['일', '월', '화', '수', '목', '금', '토'];
-    const date = new Date(`2023-12-${this.#date}`);
-    const dayOfWeek = days[date.getDay()];
+    const visiteDate = new Date(`2023-12-${date}`);
+    const dayOfWeek = days[visiteDate.getDay()];
     return dayOfWeek !== '금' && dayOfWeek !== '토';
   }
 
-  #isSpecialDay() {
+  #isSpecialDay(date) {
     const specialDay = [3, 10, 17, 24, 25, 31];
-    return specialDay.includes(this.#date);
+    return specialDay.includes(date);
   }
 }
