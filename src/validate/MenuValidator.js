@@ -1,4 +1,4 @@
-import MenuManager from './lib/MenuManager.js';
+import MenuManager from '../lib/MenuManager.js';
 
 export default class MenuValidator {
   static validate(menuString) {

@@ -1,9 +1,10 @@
 import { Console } from '@woowacourse/mission-utils';
 import InputView from '../view/InputView.js';
 import OutputView from '../view/OutputView.js';
-import DateValidator from '../DateValidator.js';
-import MenuValidator from '../MenuValidator.js';
+import DateValidator from '../validate/DateValidator.js';
+import MenuValidator from '../validate/MenuValidator.js';
 import MenuManager from '../lib/MenuManager.js';
+import EventBadgeFinder from '../EventBadgeFinder.js';
 
 export default class EventPlannerController {
   #benefitCalculator;
@@ -14,16 +15,17 @@ export default class EventPlannerController {
 
   async start() {
     const { date, menu, totalAmount } = await this.#order();
+    OutputView.printEventBenefitsOnScreen(date);
     OutputView.printMenu(menu);
     OutputView.printAmounts(totalAmount);
 
-    const { totalBenefit, totalDiscount, gift } = this.#getTotalBenefit(date, menu);
+    const { totalBenefit, totalDiscount, gift } = this.#getTotalBenefit(date, menu, totalAmount);
     OutputView.printGift(gift);
     OutputView.printBenefit(totalBenefit);
     OutputView.printTotalDiscount(totalDiscount);
     OutputView.printAmountAfterBenefit(totalAmount - totalDiscount);
 
-    const badge = this.#getBadge(totalDiscount);
+    const badge = EventBadgeFinder.findBadge(totalDiscount);
     OutputView.printBadge(badge);
   }
 
@@ -64,21 +66,15 @@ export default class EventPlannerController {
     return amount;
   }
 
-  #getTotalBenefit(date, menu) {
+  #getTotalBenefit(date, menu, totalAmount) {
     let gift = '';
     const { totalBenefit, totalDiscount } = this.#benefitCalculator.calculateTotalBenefit(
       date,
       menu,
+      totalAmount,
     );
     if (totalBenefit.find(([eventName]) => eventName === '증정 이벤트')) gift = '샴페인 1개';
 
     return { totalBenefit, totalDiscount, gift };
-  }
-
-  #getBadge(totalDiscount) {
-    if (totalDiscount >= 5000 && totalDiscount < 10_000) return '별';
-    if (totalDiscount >= 10_000 && totalDiscount < 20_000) return '트리';
-    if (totalDiscount >= 20_000) return '산타';
-    return '없음';
   }
 }
