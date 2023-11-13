@@ -12,7 +12,7 @@ const OutputView = {
 
   printAmounts(amounts) {
     Console.print('\n<할인 전 총주문 금액>');
-    Console.print(`${new Intl.NumberFormat().format(amounts)}원`);
+    Console.print(`${this.convertToFormattedCurrency(amounts)}원`);
   },
 
   printGift(gift) {
@@ -25,24 +25,28 @@ const OutputView = {
     Console.print('\n<혜택 내역>');
     if (benefit.length > 0) {
       benefit.forEach(([benefitTitle, discount]) => {
-        Console.print(`${benefitTitle}: ${new Intl.NumberFormat().format(-discount)}원`);
+        Console.print(`${benefitTitle}: ${this.convertToFormattedCurrency(-discount)}원`);
       });
     } else Console.print('없음');
   },
 
   printTotalDiscount(totalDiscount) {
     Console.print('\n<총혜택 금액>');
-    Console.print(`${new Intl.NumberFormat().format(totalDiscount)}원`);
+    Console.print(`${this.convertToFormattedCurrency(totalDiscount)}원`);
   },
 
   printAmountAfterBenefit(amount) {
     Console.print('\n<할인 후 예상 결제 금액>');
-    Console.print(`${new Intl.NumberFormat().format(amount)}원`);
+    Console.print(`${this.convertToFormattedCurrency(amount)}원`);
   },
 
   printBadge(badge) {
     Console.print('\n<12월 이벤트 배지>');
     Console.print(badge);
+  },
+
+  convertToFormattedCurrency(amount) {
+    return new Intl.NumberFormat().format(amount);
   },
 };
 
