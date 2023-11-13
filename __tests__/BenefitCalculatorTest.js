@@ -81,7 +81,32 @@ describe('혜택 내역 테스트', () => {
     });
   });
 
-  test('할인이 적용되지 않으면 빈 배열과 할인금액 0을 반환', () => {
+  test('총 주문금액이 10,000원 미만이면 혜택 적용하지 않음', () => {
+    const date = 28;
+    order = [['타파스', 1]];
+    totalAmount = 5500;
+
+    expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
+      totalBenefit: [],
+      totalDiscount: 0,
+    });
+  });
+
+  test('평일이지만 디저트메뉴가 없음', () => {
+    const date = 28;
+    order = [
+      ['타파스', 1],
+      ['시저샐러드', 1],
+    ];
+    totalAmount = 13_500;
+
+    expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
+      totalBenefit: [],
+      totalDiscount: 0,
+    });
+  });
+
+  test('주말이지만 메인메뉴가 없음', () => {
     const date = 29;
     order = [
       ['타파스', 1],
