@@ -4,8 +4,7 @@ import MenuManager from './lib/MenuManager.js';
 
 export default class BenefitCalculator {
   // 총 혜택내역을 계산해서 반환하는 외부인터페이스
-  calculateTotalBenefit(date, menu) {
-    const amount = this.#getTotalAmount(menu);
+  calculateTotalBenefit(date, menu, amount) {
     if (amount >= 10_000) {
       const totalBenefit = this.#getTotalBenefit(date, menu, amount);
       const totalDiscount = this.#getTotalDiscount(totalBenefit);
@@ -31,13 +30,5 @@ export default class BenefitCalculator {
       totalDiscount += amount;
     });
     return totalDiscount;
-  }
-
-  #getTotalAmount(menu) {
-    let amount = 0;
-    menu.forEach(([menuName, count]) => {
-      amount += MenuManager.getMenuAmount(menuName) * count;
-    });
-    return amount;
   }
 }
