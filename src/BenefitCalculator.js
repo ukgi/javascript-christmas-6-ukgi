@@ -14,8 +14,8 @@ export default class BenefitCalculator {
 
   #getTotalDiscount(totalBenefit) {
     let totalDiscount = 0;
-    totalBenefit.forEach(([, amount]) => {
-      totalDiscount += amount;
+    totalBenefit.forEach(({ discount }) => {
+      totalDiscount += discount;
     });
     return totalDiscount;
   }
@@ -31,33 +31,33 @@ export default class BenefitCalculator {
       if (eventName === '증정 이벤트') benefit.push(this.#giftHandler(eventName));
     });
 
-    return benefit.filter(([, discountAmount]) => discountAmount > 0);
+    return benefit.filter(({ discount }) => discount > 0);
   }
 
-  #christmasDdayHandler(eventName, date) {
-    return [eventName, 1000 + 100 * date - 100];
+  #christmasDdayHandler(event, date) {
+    return { event, discount: 1000 + 100 * date - 100 };
   }
 
-  #menuEventHandler(eventName, menu) {
+  #menuEventHandler(event, menu) {
     let discount = 0;
-    if (eventName === '평일 할인') {
+    if (event === '평일 할인') {
       menu.forEach(([menuName, count]) => {
         if (MenuManager.getCategoryByMenu(menuName) === '디저트') discount += 2023 * count;
       });
     }
-    if (eventName === '주말 할인') {
+    if (event === '주말 할인') {
       menu.forEach(([menuName, count]) => {
         if (MenuManager.getCategoryByMenu(menuName) === '메인') discount += 2023 * count;
       });
     }
-    return [eventName, discount];
+    return { event, discount };
   }
 
-  #specialDayHandler(eventName) {
-    return [eventName, 1000];
+  #specialDayHandler(event) {
+    return { event, discount: 1000 };
   }
 
-  #giftHandler(eventName) {
-    return [eventName, 25_000];
+  #giftHandler(event) {
+    return { event, discount: 25_000 };
   }
 }

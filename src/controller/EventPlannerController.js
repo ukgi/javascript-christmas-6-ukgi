@@ -73,7 +73,7 @@ export default class EventPlannerController {
       menu,
       totalAmount,
     );
-    if (totalBenefit.find(([eventName]) => eventName === '증정 이벤트')) gift = '샴페인 1개';
+    if (totalBenefit.find(({ event }) => event === '증정 이벤트')) gift = '샴페인 1개';
 
     return { totalBenefit, totalDiscount, gift };
   }

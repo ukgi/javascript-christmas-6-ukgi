@@ -19,8 +19,8 @@ describe('혜택 내역 테스트', () => {
 
     expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
       totalBenefit: [
-        ['크리스마스 디데이 할인', 1300],
-        ['평일 할인', 2023],
+        { event: '크리스마스 디데이 할인', discount: 1300 },
+        { event: '평일 할인', discount: 2023 },
       ],
       totalDiscount: 3323,
     });
@@ -31,9 +31,9 @@ describe('혜택 내역 테스트', () => {
 
     expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
       totalBenefit: [
-        ['크리스마스 디데이 할인', 3400],
-        ['평일 할인', 2023],
-        ['특별 할인', 1000],
+        { event: '크리스마스 디데이 할인', discount: 3400 },
+        { event: '평일 할인', discount: 2023 },
+        { event: '특별 할인', discount: 1000 },
       ],
       totalDiscount: 6423,
     });
@@ -44,8 +44,8 @@ describe('혜택 내역 테스트', () => {
 
     expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
       totalBenefit: [
-        ['크리스마스 디데이 할인', 1000],
-        ['주말 할인', 2023],
+        { event: '크리스마스 디데이 할인', discount: 1000 },
+        { event: '주말 할인', discount: 2023 },
       ],
       totalDiscount: 3023,
     });
@@ -55,7 +55,7 @@ describe('혜택 내역 테스트', () => {
     const date = 26;
 
     expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
-      totalBenefit: [['평일 할인', 2023]],
+      totalBenefit: [{ event: '평일 할인', discount: 2023 }],
       totalDiscount: 2023,
     });
   });
@@ -65,8 +65,8 @@ describe('혜택 내역 테스트', () => {
 
     expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
       totalBenefit: [
-        ['평일 할인', 2023],
-        ['특별 할인', 1000],
+        { event: '평일 할인', discount: 2023 },
+        { event: '특별 할인', discount: 1000 },
       ],
       totalDiscount: 3023,
     });
@@ -76,7 +76,7 @@ describe('혜택 내역 테스트', () => {
     const date = 29;
 
     expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
-      totalBenefit: [['주말 할인', 2023]],
+      totalBenefit: [{ event: '주말 할인', discount: 2023 }],
       totalDiscount: 2023,
     });
   });

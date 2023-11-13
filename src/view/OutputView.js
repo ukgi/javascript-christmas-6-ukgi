@@ -24,8 +24,8 @@ const OutputView = {
   printBenefit(benefit) {
     Console.print('\n<혜택 내역>');
     if (benefit.length > 0) {
-      benefit.forEach(([benefitTitle, discount]) => {
-        Console.print(`${benefitTitle}: ${this.convertToFormattedCurrency(-discount)}원`);
+      benefit.forEach(({ event, discount }) => {
+        Console.print(`${event}: ${this.convertToFormattedCurrency(-discount)}원`);
       });
     } else Console.print('없음');
   },
