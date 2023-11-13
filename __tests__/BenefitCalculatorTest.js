@@ -80,6 +80,21 @@ describe('혜택 내역 테스트', () => {
       totalDiscount: 2023,
     });
   });
+});
+
+describe('혜택이 적용되지 않는 케이스 테스트', () => {
+  let benefitCalculator;
+  let order;
+  let totalAmount;
+  beforeEach(() => {
+    benefitCalculator = new BenefitCalculator();
+    order = [
+      ['해산물파스타', 1],
+      ['레드와인', 1],
+      ['초코케이크', 1],
+    ];
+    totalAmount = 110_000;
+  });
 
   test('총 주문금액이 10,000원 미만이면 혜택 적용하지 않음', () => {
     const date = 28;
