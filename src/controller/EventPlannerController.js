@@ -68,7 +68,7 @@ export default class EventPlannerController {
 
   #getTotalBenefit(date, menu, totalAmount) {
     let gift = '';
-    const { totalBenefit, totalDiscount } = this.#benefitCalculator.calculateTotalBenefit(
+    const { totalBenefit, totalDiscount } = this.#benefitCalculator.getBenefitSummary(
       date,
       menu,
       totalAmount,

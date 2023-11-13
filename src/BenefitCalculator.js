@@ -2,21 +2,22 @@ import EventFinder from './EventFinder.js';
 import MenuManager from './lib/MenuManager.js';
 
 export default class BenefitCalculator {
-  calculateTotalBenefit(date, menu, amount) {
+  getBenefitSummary(date, menu, amount) {
     if (amount >= 10_000) {
       const event = EventFinder.getEvent(date, amount);
       const totalBenefit = this.#calculateBenefit(date, menu, event);
-      const totalDiscount = this.#getTotalDiscount(totalBenefit);
+      const totalDiscount = this.#calculateTotalDiscount(totalBenefit);
       return { totalBenefit, totalDiscount };
     }
     return { totalBenefit: [], totalDiscount: 0 };
   }
 
-  #getTotalDiscount(totalBenefit) {
+  #calculateTotalDiscount(totalBenefit) {
     let totalDiscount = 0;
     totalBenefit.forEach(({ discount }) => {
       totalDiscount += discount;
     });
+
     return totalDiscount;
   }
 

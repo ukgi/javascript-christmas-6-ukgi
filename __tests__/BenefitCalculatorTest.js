@@ -17,7 +17,7 @@ describe('혜택 내역 테스트', () => {
   test('크리스마스 디데이 할인 + 평일 할인', () => {
     const date = 4;
 
-    expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
+    expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
       totalBenefit: [
         { event: '크리스마스 디데이 할인', discount: 1300 },
         { event: '평일 할인', discount: 2023 },
@@ -29,7 +29,7 @@ describe('혜택 내역 테스트', () => {
   test('크리스마스 디데이 할인 + 평일 할인 + 특별 할인', () => {
     const date = 25;
 
-    expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
+    expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
       totalBenefit: [
         { event: '크리스마스 디데이 할인', discount: 3400 },
         { event: '평일 할인', discount: 2023 },
@@ -42,7 +42,7 @@ describe('혜택 내역 테스트', () => {
   test('크리스마스 디데이 할인 + 주말 할인', () => {
     const date = 1;
 
-    expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
+    expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
       totalBenefit: [
         { event: '크리스마스 디데이 할인', discount: 1000 },
         { event: '주말 할인', discount: 2023 },
@@ -54,7 +54,7 @@ describe('혜택 내역 테스트', () => {
   test('평일 할인', () => {
     const date = 26;
 
-    expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
+    expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
       totalBenefit: [{ event: '평일 할인', discount: 2023 }],
       totalDiscount: 2023,
     });
@@ -63,7 +63,7 @@ describe('혜택 내역 테스트', () => {
   test('평일 할인 + 특별 할인', () => {
     const date = 31;
 
-    expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
+    expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
       totalBenefit: [
         { event: '평일 할인', discount: 2023 },
         { event: '특별 할인', discount: 1000 },
@@ -75,7 +75,7 @@ describe('혜택 내역 테스트', () => {
   test('주말 할인', () => {
     const date = 29;
 
-    expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
+    expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
       totalBenefit: [{ event: '주말 할인', discount: 2023 }],
       totalDiscount: 2023,
     });
@@ -86,7 +86,7 @@ describe('혜택 내역 테스트', () => {
     order = [['타파스', 1]];
     totalAmount = 5500;
 
-    expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
+    expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
       totalBenefit: [],
       totalDiscount: 0,
     });
@@ -100,7 +100,7 @@ describe('혜택 내역 테스트', () => {
     ];
     totalAmount = 13_500;
 
-    expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
+    expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
       totalBenefit: [],
       totalDiscount: 0,
     });
@@ -114,7 +114,7 @@ describe('혜택 내역 테스트', () => {
     ];
     totalAmount = 13_500;
 
-    expect(benefitCalculator.calculateTotalBenefit(date, order, totalAmount)).toEqual({
+    expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
       totalBenefit: [],
       totalDiscount: 0,
     });
