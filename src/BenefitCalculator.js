@@ -13,8 +13,7 @@ export default class BenefitCalculator {
 
   #getTotalBenefit(date, menu, amount) {
     const totalBenefit = [];
-    if (amount >= 120_000) totalBenefit.push(['증정 이벤트', 25_000]);
-    const event = EventFinder.getEventByDate(date);
+    const event = EventFinder.getEvent(date, amount);
     const benefitByDate = this.#calculateBenefitByDate(date, menu, event);
     benefitByDate.forEach((benefit) => {
       totalBenefit.push(benefit);
@@ -33,16 +32,19 @@ export default class BenefitCalculator {
   #calculateBenefitByDate(date, menu, event) {
     const discount = [];
     event.forEach((eventName) => {
-      if (eventName === '크리스마스 디데이 할인') discount.push(this.#christmasDdayHandler(date));
+      if (eventName === '크리스마스 디데이 할인')
+        discount.push(this.#christmasDdayHandler(eventName, date));
       if (eventName === '평일 할인') discount.push(this.#menuEventHandler(eventName, menu));
       if (eventName === '주말 할인') discount.push(this.#menuEventHandler(eventName, menu));
-      if (eventName === '특별 할인') discount.push(this.#specialDayHandler());
+      if (eventName === '특별 할인') discount.push(this.#specialDayHandler(eventName));
+      if (eventName === '증정 이벤트') discount.push(this.#giftHandler(eventName));
     });
+
     return discount.filter(([, discountAmount]) => discountAmount > 0);
   }
 
-  #christmasDdayHandler(date) {
-    return ['크리스마스 디데이 할인', 1000 + 100 * date - 100];
+  #christmasDdayHandler(eventName, date) {
+    return [eventName, 1000 + 100 * date - 100];
   }
 
   #menuEventHandler(eventName, menu) {
@@ -60,7 +62,11 @@ export default class BenefitCalculator {
     return [eventName, discount];
   }
 
-  #specialDayHandler() {
-    return ['특별 할인', 1000];
+  #specialDayHandler(eventName) {
+    return [eventName, 1000];
+  }
+
+  #giftHandler(eventName) {
+    return [eventName, 25_000];
   }
 }

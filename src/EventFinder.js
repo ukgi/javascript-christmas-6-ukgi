@@ -1,10 +1,11 @@
 export default class EventFinder {
-  static getEventByDate(date) {
+  static getEvent(date, totalAmount) {
     const event = [];
     if (this.#isChristmasDday(date)) event.push('크리스마스 디데이 할인');
     if (this.#isWeekday(date)) event.push('평일 할인');
     else event.push('주말 할인');
     if (this.#isSpecialDay(date)) event.push('특별 할인');
+    if (totalAmount >= 120_000) event.push('증정 이벤트');
 
     return event;
   }
