@@ -15,6 +15,7 @@ export default class EventPlannerController {
 
   async start() {
     const { date, menu, totalAmount } = await this.#order();
+    OutputView.printEventBenefitsOnScreen(date);
     OutputView.printMenu(menu);
     OutputView.printAmounts(totalAmount);
 
