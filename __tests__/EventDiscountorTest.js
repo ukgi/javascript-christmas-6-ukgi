@@ -1,4 +1,4 @@
-import EventHandlerManager from '../src/EventHandlerManager';
+import EventDiscountor from '../src/EventDiscountor';
 
 describe('이벤트 혜택내역 반환 테스트', () => {
   test('이벤트에 따른 혜택내역을 반환합니다.', () => {
@@ -10,7 +10,7 @@ describe('이벤트 혜택내역 반환 테스트', () => {
     ];
     const event = ['크리스마스 디데이 할인', '평일 할인'];
 
-    expect(EventHandlerManager.getBenefitByDate(date, order, event)).toEqual([
+    expect(EventDiscountor.calculateBenefitByDate(date, order, event)).toEqual([
       ['크리스마스 디데이 할인', 1300],
       ['평일 할인', 2023],
     ]);

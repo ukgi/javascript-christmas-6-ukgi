@@ -1,5 +1,5 @@
 import EventFinder from './EventFinder.js';
-import EventHandlerManager from './EventHandlerManager.js';
+import EventDiscountor from './EventDiscountor.js';
 import MenuManager from './lib/MenuManager.js';
 
 export default class BenefitCalculator {
@@ -18,7 +18,7 @@ export default class BenefitCalculator {
     const totalBenefit = [];
     if (amount >= 120_000) totalBenefit.push(['증정 이벤트', 25_000]);
     const event = EventFinder.getEventByDate(date);
-    const benefitByDate = EventHandlerManager.getBenefitByDate(date, menu, event);
+    const benefitByDate = EventDiscountor.calculateBenefitByDate(date, menu, event);
     benefitByDate.forEach((benefit) => {
       totalBenefit.push(benefit);
     });

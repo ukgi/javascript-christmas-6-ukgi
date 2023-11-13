@@ -1,7 +1,7 @@
 import MenuManager from './lib/MenuManager';
 
-export default class EventHandlerManager {
-  static getBenefitByDate(date, menu, event) {
+export default class EventDiscountor {
+  static calculateBenefitByDate(date, menu, event) {
     const discount = [];
     event.forEach((eventName) => {
       if (eventName === '크리스마스 디데이 할인') discount.push(this.#christmasDdayHandler(date));
