@@ -1,4 +1,4 @@
-import EventBadgeFinder from '../src/EventBadgeFinder';
+import EventBadgeFinder from '../../src/domain/EventBadgeFinder';
 
 describe('뱃지 테스트', () => {
   test('총 혜택금액이 5000원 미만이면 뱃지 없음', () => {

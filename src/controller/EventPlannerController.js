@@ -4,7 +4,7 @@ import OutputView from '../view/OutputView.js';
 import DateValidator from '../validate/DateValidator.js';
 import MenuValidator from '../validate/MenuValidator.js';
 import MenuManager from '../lib/MenuManager.js';
-import EventBadgeFinder from '../EventBadgeFinder.js';
+import EventBadgeFinder from '../domain/EventBadgeFinder.js';
 
 export default class EventPlannerController {
   #benefitCalculator;

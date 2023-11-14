@@ -1,4 +1,4 @@
-import BenefitCalculator from './BenefitCalculator.js';
+import BenefitCalculator from './domain/BenefitCalculator.js';
 import EventPlannerController from './controller/EventPlannerController.js';
 
 class App {

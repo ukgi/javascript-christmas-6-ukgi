@@ -1,4 +1,4 @@
-import BenefitCalculator from '../src/BenefitCalculator';
+import BenefitCalculator from '../../src/domain/BenefitCalculator';
 
 describe('혜택 내역 테스트', () => {
   let benefitCalculator;

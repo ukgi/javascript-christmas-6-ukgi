@@ -1,4 +1,4 @@
-import EventFinder from '../src/EventFinder';
+import EventFinder from '../../src/domain/EventFinder';
 
 describe('이벤트 리스트 반환 테스트', () => {
   test.each([

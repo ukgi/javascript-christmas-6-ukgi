@@ -1,5 +1,5 @@
 import EventFinder from './EventFinder.js';
-import MenuManager from './lib/MenuManager.js';
+import MenuManager from '../lib/MenuManager.js';
 
 export default class BenefitCalculator {
   getBenefitSummary(date, menu, amount) {
