@@ -1,3 +1,4 @@
+import { ERROR_MESSAGE } from '../../src/constants/message';
 import MenuValidator from '../../src/validate/MenuValidator';
 
 describe('주문 메뉴 유효성 테스트', () => {
@@ -14,7 +15,7 @@ describe('주문 메뉴 유효성 테스트', () => {
     (order) => {
       expect(() => {
         MenuValidator.validate(order);
-      }).toThrow('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+      }).toThrow(ERROR_MESSAGE.notValidOrder);
     },
   );
 
@@ -23,7 +24,7 @@ describe('주문 메뉴 유효성 테스트', () => {
 
     expect(() => {
       MenuValidator.validate(order);
-    }).toThrow('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+    }).toThrow(ERROR_MESSAGE.notValidOrder);
   });
 
   test('중복된 메뉴를 주문하면 예외처리', () => {
@@ -31,7 +32,7 @@ describe('주문 메뉴 유효성 테스트', () => {
 
     expect(() => {
       MenuValidator.validate(order);
-    }).toThrow('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+    }).toThrow(ERROR_MESSAGE.notValidOrder);
   });
 
   test('음료만 주문하면 예외처리', () => {
@@ -39,13 +40,13 @@ describe('주문 메뉴 유효성 테스트', () => {
 
     expect(() => {
       MenuValidator.validate(order);
-    }).toThrow('[ERROR] 음료만 주문할 수 없습니다. 다시 입력해 주세요.');
+    }).toThrow(ERROR_MESSAGE.notOrderOnlyBeverage);
   });
 
   test.each(['abc', '', ' ', '0'])('주문갯수가 1 이상의 숫자가 아니면 예외처리', (count) => {
     expect(() => {
       MenuValidator.validate(`티본스테이크-${count}`);
-    }).toThrow('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+    }).toThrow(ERROR_MESSAGE.notValidOrder);
   });
 
   test('한번에 메뉴주문을 20개 초과했을 경우 예외처리', () => {
@@ -53,6 +54,6 @@ describe('주문 메뉴 유효성 테스트', () => {
 
     expect(() => {
       MenuValidator.validate(order);
-    }).toThrow('[ERROR] 한번에 주문할 수 있는 갯수는 최대 20개입니다. 다시 입력해 주세요.');
+    }).toThrow(ERROR_MESSAGE.maxOrderQuantity);
   });
 });

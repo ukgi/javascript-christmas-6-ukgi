@@ -1,9 +1,10 @@
+import { ERROR_MESSAGE } from '../constants/message.js';
 import MenuManager from '../lib/MenuManager.js';
 
 export default class MenuValidator {
   static validate(menuString) {
     if (!this.#isValidMenuFormat(menuString)) {
-      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+      throw new Error(ERROR_MESSAGE.notValidOrder);
     }
     const menuList = menuString.split(',').map((order) => order.split('-'));
     const menuCountList = menuList.map(([, count]) => Number(count));
@@ -16,20 +17,20 @@ export default class MenuValidator {
 
   static #validateNameList(nameList) {
     if (!this.#isAvailable(nameList) || this.#isDuplicate(nameList)) {
-      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+      throw new Error(ERROR_MESSAGE.notValidOrder);
     }
     if (this.#isOnlyOrderBeverage(nameList)) {
-      throw new Error('[ERROR] 음료만 주문할 수 없습니다. 다시 입력해 주세요.');
+      throw new Error(ERROR_MESSAGE.notOrderOnlyBeverage);
     }
   }
 
   static #validateCountList(countList) {
     if (!this.#isValidOrderQuantity(countList)) {
-      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+      throw new Error(ERROR_MESSAGE.notValidOrder);
     }
 
     if (this.#isExceedOrderLimit(countList)) {
-      throw new Error('[ERROR] 한번에 주문할 수 있는 갯수는 최대 20개입니다. 다시 입력해 주세요.');
+      throw new Error(ERROR_MESSAGE.maxOrderQuantity);
     }
   }
 

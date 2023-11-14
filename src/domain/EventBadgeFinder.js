@@ -1,8 +1,14 @@
+import BADGE from '../constants/badge.js';
+import { NO_RESULT_FOUND, THRESHOLD_AMOUNT } from '../constants/conditions.js';
+
 export default class EventBadgeFinder {
   static findBadge(totalDiscount) {
-    if (totalDiscount >= 5000 && totalDiscount < 10_000) return '별';
-    if (totalDiscount >= 10_000 && totalDiscount < 20_000) return '트리';
-    if (totalDiscount >= 20_000) return '산타';
-    return '없음';
+    if (totalDiscount >= THRESHOLD_AMOUNT.starBadge && totalDiscount < THRESHOLD_AMOUNT.treeBadge)
+      return BADGE.star;
+    if (totalDiscount >= THRESHOLD_AMOUNT.treeBadge && totalDiscount < THRESHOLD_AMOUNT.santaBadge)
+      return BADGE.tree;
+    if (totalDiscount >= THRESHOLD_AMOUNT.santaBadge) return BADGE.santa;
+
+    return NO_RESULT_FOUND;
   }
 }

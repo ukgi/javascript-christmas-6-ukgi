@@ -5,12 +5,15 @@ import DateValidator from '../validate/DateValidator.js';
 import MenuValidator from '../validate/MenuValidator.js';
 import MenuManager from '../lib/MenuManager.js';
 import EventBadgeFinder from '../domain/EventBadgeFinder.js';
+import { EVENTS, GIFT } from '../constants/benefit.js';
+import { INITIAL_ZERO } from '../constants/conditions.js';
 
 export default class EventPlannerController {
   #benefitCalculator;
 
   constructor(benefitCalculator) {
     this.#benefitCalculator = benefitCalculator;
+    OutputView.printPlannerStart();
   }
 
   async start() {
@@ -41,8 +44,8 @@ export default class EventPlannerController {
     try {
       const answer = await InputView.readDate();
       return DateValidator.validate(answer);
-    } catch (error) {
-      Console.print(error.message);
+    } catch ({ message }) {
+      Console.print(message);
       return this.#getDate();
     }
   }
@@ -51,14 +54,14 @@ export default class EventPlannerController {
     try {
       const answer = await InputView.readMenu();
       return MenuValidator.validate(answer);
-    } catch (error) {
-      Console.print(error.message);
+    } catch ({ message }) {
+      Console.print(message);
       return this.#getMenu();
     }
   }
 
   #getTotalAmount(menu) {
-    let amount = 0;
+    let amount = INITIAL_ZERO;
     menu.forEach(([menuName, count]) => {
       amount += MenuManager.getMenuAmount(menuName) * count;
     });
@@ -73,7 +76,7 @@ export default class EventPlannerController {
       menu,
       totalAmount,
     );
-    if (totalBenefit.find(({ event }) => event === '증정 이벤트')) gift = '샴페인 1개';
+    if (totalBenefit.find(({ event }) => event === EVENTS.gift)) gift = GIFT;
 
     return { totalBenefit, totalDiscount, gift };
   }

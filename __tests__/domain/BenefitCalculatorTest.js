@@ -1,3 +1,5 @@
+import { EVENTS } from '../../src/constants/benefit';
+import { NO_BENEFIT, NO_DISCOUNT } from '../../src/constants/conditions';
 import BenefitCalculator from '../../src/domain/BenefitCalculator';
 
 describe('혜택 내역 테스트', () => {
@@ -19,8 +21,8 @@ describe('혜택 내역 테스트', () => {
 
     expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
       totalBenefit: [
-        { event: '크리스마스 디데이 할인', discount: 1300 },
-        { event: '평일 할인', discount: 2023 },
+        { event: EVENTS.christmasDday, discount: 1300 },
+        { event: EVENTS.weekday, discount: 2023 },
       ],
       totalDiscount: 3323,
     });
@@ -31,9 +33,9 @@ describe('혜택 내역 테스트', () => {
 
     expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
       totalBenefit: [
-        { event: '크리스마스 디데이 할인', discount: 3400 },
-        { event: '평일 할인', discount: 2023 },
-        { event: '특별 할인', discount: 1000 },
+        { event: EVENTS.christmasDday, discount: 3400 },
+        { event: EVENTS.weekday, discount: 2023 },
+        { event: EVENTS.special, discount: 1000 },
       ],
       totalDiscount: 6423,
     });
@@ -44,8 +46,8 @@ describe('혜택 내역 테스트', () => {
 
     expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
       totalBenefit: [
-        { event: '크리스마스 디데이 할인', discount: 1000 },
-        { event: '주말 할인', discount: 2023 },
+        { event: EVENTS.christmasDday, discount: 1000 },
+        { event: EVENTS.weekend, discount: 2023 },
       ],
       totalDiscount: 3023,
     });
@@ -55,7 +57,7 @@ describe('혜택 내역 테스트', () => {
     const date = 26;
 
     expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
-      totalBenefit: [{ event: '평일 할인', discount: 2023 }],
+      totalBenefit: [{ event: EVENTS.weekday, discount: 2023 }],
       totalDiscount: 2023,
     });
   });
@@ -65,8 +67,8 @@ describe('혜택 내역 테스트', () => {
 
     expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
       totalBenefit: [
-        { event: '평일 할인', discount: 2023 },
-        { event: '특별 할인', discount: 1000 },
+        { event: EVENTS.weekday, discount: 2023 },
+        { event: EVENTS.special, discount: 1000 },
       ],
       totalDiscount: 3023,
     });
@@ -76,7 +78,7 @@ describe('혜택 내역 테스트', () => {
     const date = 29;
 
     expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
-      totalBenefit: [{ event: '주말 할인', discount: 2023 }],
+      totalBenefit: [{ event: EVENTS.weekend, discount: 2023 }],
       totalDiscount: 2023,
     });
   });
@@ -102,8 +104,8 @@ describe('혜택이 적용되지 않는 케이스 테스트', () => {
     totalAmount = 5500;
 
     expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
-      totalBenefit: [],
-      totalDiscount: 0,
+      totalBenefit: NO_BENEFIT,
+      totalDiscount: NO_DISCOUNT,
     });
   });
 
@@ -116,8 +118,8 @@ describe('혜택이 적용되지 않는 케이스 테스트', () => {
     totalAmount = 13_500;
 
     expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
-      totalBenefit: [],
-      totalDiscount: 0,
+      totalBenefit: NO_BENEFIT,
+      totalDiscount: NO_DISCOUNT,
     });
   });
 
@@ -130,8 +132,8 @@ describe('혜택이 적용되지 않는 케이스 테스트', () => {
     totalAmount = 13_500;
 
     expect(benefitCalculator.getBenefitSummary(date, order, totalAmount)).toEqual({
-      totalBenefit: [],
-      totalDiscount: 0,
+      totalBenefit: NO_BENEFIT,
+      totalDiscount: NO_DISCOUNT,
     });
   });
 });

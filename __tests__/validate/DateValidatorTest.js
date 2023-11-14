@@ -1,3 +1,4 @@
+import { ERROR_MESSAGE } from '../../src/constants/message';
 import DateValidator from '../../src/validate/DateValidator';
 
 describe('방문날짜 유효성 검사 테스트', () => {
@@ -12,7 +13,7 @@ describe('방문날짜 유효성 검사 테스트', () => {
     (date) => {
       expect(() => {
         DateValidator.validate(date);
-      }).toThrow('[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.');
+      }).toThrow(ERROR_MESSAGE.notValidDate);
     },
   );
 });
