@@ -4,6 +4,8 @@ import { DAYS, EVENT_DATE, THRESHOLD_AMOUNT } from '../constants/conditions.js';
 export default class EventFinder {
   static getEvent(date, totalAmount) {
     const event = [];
+    if (totalAmount < THRESHOLD_AMOUNT.benefit) return event;
+
     if (this.#isChristmasDday(date)) event.push(EVENTS.christmasDday);
     if (this.#isWeekday(date)) event.push(EVENTS.weekday);
     else event.push(EVENTS.weekend);

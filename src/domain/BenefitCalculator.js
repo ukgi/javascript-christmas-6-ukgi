@@ -1,24 +1,14 @@
-import EventFinder from './EventFinder.js';
 import MenuManager from '../lib/MenuManager.js';
 import { DISCOUNT_AMOUNT, EVENTS } from '../constants/benefit.js';
-import {
-  INITIAL_ZERO,
-  NO_BENEFIT,
-  NO_DISCOUNT,
-  THRESHOLD_AMOUNT,
-} from '../constants/conditions.js';
+import { INITIAL_ZERO, NO_DISCOUNT } from '../constants/conditions.js';
 import { MENU_CATEGORY } from '../constants/menu.js';
 
 export default class BenefitCalculator {
-  getBenefitSummary(date, menu, amount) {
-    if (amount >= THRESHOLD_AMOUNT.benefit) {
-      const event = EventFinder.getEvent(date, amount);
-      const totalBenefit = this.#calculateBenefit(date, menu, event);
-      const totalDiscount = this.#calculateTotalDiscount(totalBenefit);
+  getBenefitSummary(date, menu, event) {
+    const totalBenefit = this.#calculateBenefit(date, menu, event);
+    const totalDiscount = this.#calculateTotalDiscount(totalBenefit);
 
-      return { totalBenefit, totalDiscount };
-    }
-    return { totalBenefit: NO_BENEFIT, totalDiscount: NO_DISCOUNT };
+    return { totalBenefit, totalDiscount };
   }
 
   #calculateTotalDiscount(totalBenefit) {
@@ -32,6 +22,8 @@ export default class BenefitCalculator {
 
   #calculateBenefit(date, menu, event) {
     const benefit = [];
+    if (event.length === 0) return benefit;
+
     event.forEach((eventName) => {
       if (eventName === EVENTS.christmasDday)
         benefit.push(this.#christmasDdayHandler(eventName, date));
