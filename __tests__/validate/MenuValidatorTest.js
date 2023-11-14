@@ -2,12 +2,21 @@ import MenuValidator from '../../src/validate/MenuValidator';
 
 describe('주문 메뉴 유효성 테스트', () => {
   test('메뉴형식에 맞게 올바르게 주문합니다.', () => {
-    const orders = '해산물파스타-1,레드와인-1,초코케이크-1';
+    const order = '해산물파스타-1,레드와인-1,초코케이크-1';
 
     expect(() => {
-      MenuValidator.validate(orders);
+      MenuValidator.validate(order);
     }).not.toThrow();
   });
+
+  test.each(['해산물파스타1', '해산물파스타->1', '해산물파스타 1'])(
+    '메뉴 주문형식에 올바르지 않으면 예외처리',
+    (order) => {
+      expect(() => {
+        MenuValidator.validate(order);
+      }).toThrow('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+    },
+  );
 
   test('메뉴판에 없는 메뉴를 입력하면 예외처리', () => {
     const order = '김치찌개-1';
