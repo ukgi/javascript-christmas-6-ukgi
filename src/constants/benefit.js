@@ -10,6 +10,7 @@ const EVENTS = Object.freeze({
 const DISCOUNT_AMOUNT = Object.freeze({
   special: 1000,
   gift: 25_000,
+  menu: 2023,
 });
 
 export { EVENTS, DISCOUNT_AMOUNT, GIFT };

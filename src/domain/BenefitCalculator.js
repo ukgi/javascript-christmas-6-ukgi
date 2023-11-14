@@ -49,22 +49,25 @@ export default class BenefitCalculator {
   }
 
   #menuEventHandler(event, menu) {
-    let discount = INITIAL_ZERO;
     if (event === EVENTS.weekday) {
-      menu.forEach(([menuName, count]) => {
-        if (MenuManager.getCategoryByMenu(menuName) === MENU_CATEGORY.dessert)
-          discount += 2023 * count;
-      });
+      const discount = this.#calculateDiscountByCategory(menu, MENU_CATEGORY.dessert);
+      return { event, discount };
     }
     if (event === EVENTS.weekend) {
-      menu.forEach(([menuName, count]) => {
-        if (MenuManager.getCategoryByMenu(menuName) === MENU_CATEGORY.main)
-          discount += 2023 * count;
-      });
+      const discount = this.#calculateDiscountByCategory(menu, MENU_CATEGORY.main);
+      return { event, discount };
     }
-
-    return { event, discount };
   }
+
+  #calculateDiscountByCategory = (menu, category) => {
+    let discount = INITIAL_ZERO;
+    menu.forEach(([menuName, count]) => {
+      if (MenuManager.getCategoryByMenu(menuName) === category)
+        discount += DISCOUNT_AMOUNT.menu * count;
+    });
+
+    return discount;
+  };
 
   #specialDayHandler(event) {
     return { event, discount: DISCOUNT_AMOUNT.special };
