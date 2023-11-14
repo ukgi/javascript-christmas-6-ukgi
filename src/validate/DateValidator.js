@@ -6,6 +6,7 @@ export default class DateValidator {
     if (Number.isNaN(Number(dateString)) || !this.#isValidDayOfMonth(dateString)) {
       throw new Error(ERROR_MESSAGE.notValidDate);
     }
+
     return Number(dateString);
   }
 

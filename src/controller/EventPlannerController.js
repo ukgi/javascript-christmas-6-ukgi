@@ -6,7 +6,7 @@ import MenuValidator from '../validate/MenuValidator.js';
 import MenuManager from '../lib/MenuManager.js';
 import EventBadgeFinder from '../domain/EventBadgeFinder.js';
 import { EVENTS, GIFT } from '../constants/benefit.js';
-import { INITIAL_ZERO } from '../constants/conditions.js';
+import { INITIAL_GIFT, INITIAL_ZERO } from '../constants/conditions.js';
 import EventFinder from '../domain/EventFinder.js';
 
 export default class EventPlannerController {
@@ -27,18 +27,6 @@ export default class EventPlannerController {
     OutputView.printBadge(EventBadgeFinder.findBadge(totalDiscount));
   }
 
-  #benefitHandler(date, menu, eventList) {
-    const { totalBenefit, totalDiscount } = this.#benefitCalculator.getBenefitSummary(
-      date,
-      menu,
-      eventList,
-    );
-    OutputView.printBenefit(totalBenefit);
-    OutputView.printTotalDiscount(totalDiscount);
-
-    return totalDiscount;
-  }
-
   async #order() {
     const date = await this.#getDate();
     const menu = await this.#getMenu();
@@ -48,12 +36,6 @@ export default class EventPlannerController {
     OutputView.printAmounts(totalAmount);
 
     return { date, menu, totalAmount };
-  }
-
-  #giftHandler(eventList) {
-    let gift = '';
-    if (eventList.find((event) => event === EVENTS.gift)) gift = GIFT;
-    OutputView.printGift(gift);
   }
 
   async #getDate() {
@@ -83,5 +65,23 @@ export default class EventPlannerController {
     });
 
     return amount;
+  }
+
+  #giftHandler(eventList) {
+    let gift = INITIAL_GIFT;
+    if (eventList.find((event) => event === EVENTS.gift)) gift = GIFT;
+    OutputView.printGift(gift);
+  }
+
+  #benefitHandler(date, menu, eventList) {
+    const { totalBenefit, totalDiscount } = this.#benefitCalculator.getBenefitSummary(
+      date,
+      menu,
+      eventList,
+    );
+    OutputView.printBenefit(totalBenefit);
+    OutputView.printTotalDiscount(totalDiscount);
+
+    return totalDiscount;
   }
 }

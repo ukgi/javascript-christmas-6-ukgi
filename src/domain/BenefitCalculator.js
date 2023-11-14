@@ -1,6 +1,6 @@
 import MenuManager from '../lib/MenuManager.js';
 import { DISCOUNT_AMOUNT, EVENTS } from '../constants/benefit.js';
-import { INITIAL_ZERO, NO_DISCOUNT } from '../constants/conditions.js';
+import { INITIAL_ZERO, NO_DISCOUNT, NO_EVENT } from '../constants/conditions.js';
 import { MENU_CATEGORY } from '../constants/menu.js';
 
 export default class BenefitCalculator {
@@ -22,7 +22,7 @@ export default class BenefitCalculator {
 
   #calculateBenefit(date, menu, event) {
     const benefit = [];
-    if (event.length === 0) return benefit;
+    if (event.length === NO_EVENT) return benefit;
 
     event.forEach((eventName) => {
       if (eventName === EVENTS.christmasDday)
@@ -41,17 +41,18 @@ export default class BenefitCalculator {
   }
 
   #menuEventHandler(event, menu) {
+    let discount = INITIAL_ZERO;
     if (event === EVENTS.weekday) {
-      const discount = this.#calculateDiscountByCategory(menu, MENU_CATEGORY.dessert);
-      return { event, discount };
+      discount = this.#calculateDiscountByCategory(menu, MENU_CATEGORY.dessert);
     }
     if (event === EVENTS.weekend) {
-      const discount = this.#calculateDiscountByCategory(menu, MENU_CATEGORY.main);
-      return { event, discount };
+      discount = this.#calculateDiscountByCategory(menu, MENU_CATEGORY.main);
     }
+
+    return { event, discount };
   }
 
-  #calculateDiscountByCategory = (menu, category) => {
+  #calculateDiscountByCategory(menu, category) {
     let discount = INITIAL_ZERO;
     menu.forEach(([menuName, count]) => {
       if (MenuManager.getCategoryByMenu(menuName) === category)
@@ -59,7 +60,7 @@ export default class BenefitCalculator {
     });
 
     return discount;
-  };
+  }
 
   #specialDayHandler(event) {
     return { event, discount: DISCOUNT_AMOUNT.special };

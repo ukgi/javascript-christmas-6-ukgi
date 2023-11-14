@@ -23,20 +23,18 @@ export default class MenuManager {
   static getMenuAmount(menu) {
     let amount = 0;
     Object.values(this.#menu).forEach((currentMenu) => {
-      if (currentMenu[menu]) {
-        amount = currentMenu[menu];
-      }
+      if (currentMenu[menu]) amount = currentMenu[menu];
     });
+
     return amount;
   }
 
   static getCategoryByMenu(menu) {
     let category = '';
     Object.entries(this.#menu).forEach(([currentCategory, menuList]) => {
-      if (menuList[menu]) {
-        category = currentCategory;
-      }
+      if (menuList[menu]) category = currentCategory;
     });
+
     return category;
   }
 }

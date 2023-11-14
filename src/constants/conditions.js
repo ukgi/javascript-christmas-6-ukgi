@@ -1,6 +1,7 @@
 const INITIAL_ZERO = 0;
 const INITIAL_GIFT = '';
 const NO_DISCOUNT = Object.freeze(0);
+const NO_EVENT = Object.freeze(0);
 const NO_BENEFIT = Object.freeze([]);
 
 const NO_RESULT_FOUND = '없음';
@@ -39,4 +40,5 @@ export {
   NO_RESULT_FOUND,
   NO_BENEFIT,
   INITIAL_GIFT,
+  NO_EVENT,
 };
