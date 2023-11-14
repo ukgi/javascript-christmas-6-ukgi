@@ -6,7 +6,7 @@ import MenuValidator from '../validate/MenuValidator.js';
 import MenuManager from '../lib/MenuManager.js';
 import EventBadgeFinder from '../domain/EventBadgeFinder.js';
 import { EVENTS, GIFT } from '../constants/benefit.js';
-import { INITIAL_ZERO } from '../constants/conditions.js';
+import { INITIAL_GIFT, INITIAL_ZERO } from '../constants/conditions.js';
 
 export default class EventPlannerController {
   #benefitCalculator;
@@ -17,27 +17,10 @@ export default class EventPlannerController {
   }
 
   async start() {
-    const { date, menu, totalAmount } = await this.#order();
-    OutputView.printEventBenefitsOnScreen(date);
-    OutputView.printMenu(menu);
-    OutputView.printAmounts(totalAmount);
-
-    const { totalBenefit, totalDiscount, gift } = this.#getTotalBenefit(date, menu, totalAmount);
-    OutputView.printGift(gift);
-    OutputView.printBenefit(totalBenefit);
-    OutputView.printTotalDiscount(totalDiscount);
-    OutputView.printAmountAfterBenefit(totalAmount - totalDiscount);
-
-    const badge = EventBadgeFinder.findBadge(totalDiscount);
-    OutputView.printBadge(badge);
-  }
-
-  async #order() {
     const date = await this.#getDate();
     const menu = await this.#getMenu();
     const totalAmount = this.#getTotalAmount(menu);
-
-    return { date, menu, totalAmount };
+    this.#printEventDetails(date, menu, totalAmount);
   }
 
   async #getDate() {
@@ -69,8 +52,24 @@ export default class EventPlannerController {
     return amount;
   }
 
+  #printEventDetails(date, menu, totalAmount) {
+    OutputView.printEventBenefitsOnScreen(date);
+    OutputView.printMenu(menu);
+    OutputView.printAmounts(totalAmount);
+
+    const { totalBenefit, totalDiscount, gift } = this.#getTotalBenefit(date, menu, totalAmount);
+    OutputView.printGift(gift);
+    OutputView.printBenefit(totalBenefit);
+    OutputView.printTotalDiscount(totalDiscount);
+    const expectedAmountAfterDiscount = totalAmount - totalDiscount;
+    OutputView.printAmountAfterBenefit(expectedAmountAfterDiscount);
+
+    const badge = EventBadgeFinder.findBadge(totalDiscount);
+    OutputView.printBadge(badge);
+  }
+
   #getTotalBenefit(date, menu, totalAmount) {
-    let gift = '';
+    let gift = INITIAL_GIFT;
     const { totalBenefit, totalDiscount } = this.#benefitCalculator.getBenefitSummary(
       date,
       menu,
