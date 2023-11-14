@@ -1,5 +1,4 @@
 const INITIAL_ZERO = 0;
-const INITIAL_LIST = [];
 const INITIAL_GIFT = '';
 const NO_DISCOUNT = Object.freeze(0);
 const NO_BENEFIT = Object.freeze([]);
@@ -39,6 +38,5 @@ export {
   VISITE_DATE,
   NO_RESULT_FOUND,
   NO_BENEFIT,
-  INITIAL_LIST,
   INITIAL_GIFT,
 };
