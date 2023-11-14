@@ -16,7 +16,7 @@ describe('혜택 내역 테스트', () => {
 
   test('크리스마스 디데이 할인 + 평일 할인', () => {
     const date = 4;
-    const event = ['크리스마스 디데이 할인', '평일 할인'];
+    const event = [EVENTS.christmasDday, EVENTS.weekday];
 
     expect(benefitCalculator.getBenefitSummary(date, order, event)).toEqual({
       totalBenefit: [
@@ -29,7 +29,7 @@ describe('혜택 내역 테스트', () => {
 
   test('크리스마스 디데이 할인 + 평일 할인 + 특별 할인', () => {
     const date = 25;
-    const event = ['크리스마스 디데이 할인', '평일 할인', '특별 할인'];
+    const event = [EVENTS.christmasDday, EVENTS.weekday, EVENTS.special];
 
     expect(benefitCalculator.getBenefitSummary(date, order, event)).toEqual({
       totalBenefit: [
@@ -43,7 +43,7 @@ describe('혜택 내역 테스트', () => {
 
   test('크리스마스 디데이 할인 + 주말 할인', () => {
     const date = 1;
-    const event = ['크리스마스 디데이 할인', '주말 할인'];
+    const event = [EVENTS.christmasDday, EVENTS.weekend];
 
     expect(benefitCalculator.getBenefitSummary(date, order, event)).toEqual({
       totalBenefit: [
@@ -56,7 +56,7 @@ describe('혜택 내역 테스트', () => {
 
   test('평일 할인', () => {
     const date = 26;
-    const event = ['평일 할인'];
+    const event = [EVENTS.weekday];
 
     expect(benefitCalculator.getBenefitSummary(date, order, event)).toEqual({
       totalBenefit: [{ event: EVENTS.weekday, discount: 2023 }],
@@ -66,7 +66,7 @@ describe('혜택 내역 테스트', () => {
 
   test('평일 할인 + 특별 할인', () => {
     const date = 31;
-    const event = ['평일 할인', '특별 할인'];
+    const event = [EVENTS.weekday, EVENTS.special];
 
     expect(benefitCalculator.getBenefitSummary(date, order, event)).toEqual({
       totalBenefit: [
@@ -79,7 +79,7 @@ describe('혜택 내역 테스트', () => {
 
   test('주말 할인', () => {
     const date = 29;
-    const event = ['주말 할인'];
+    const event = [EVENTS.weekend];
 
     expect(benefitCalculator.getBenefitSummary(date, order, event)).toEqual({
       totalBenefit: [{ event: EVENTS.weekend, discount: 2023 }],
@@ -90,19 +90,21 @@ describe('혜택 내역 테스트', () => {
 
 describe('혜택이 적용되지 않는 케이스 테스트', () => {
   let benefitCalculator;
+  let expected;
   beforeEach(() => {
     benefitCalculator = new BenefitCalculator();
-  });
-
-  test('총 주문금액이 10,000원 미만이면 혜택 적용하지 않음', () => {
-    const date = 28;
-    const order = [['타파스', 1]];
-    const event = ['평일 할인'];
-
-    expect(benefitCalculator.getBenefitSummary(date, order, event)).toEqual({
+    expected = {
       totalBenefit: NO_BENEFIT,
       totalDiscount: NO_DISCOUNT,
-    });
+    };
+  });
+
+  test('혜택받을 수 있는 이벤트가 존재하지 않음', () => {
+    const date = 28;
+    const order = [['타파스', 1]];
+    const event = [];
+
+    expect(benefitCalculator.getBenefitSummary(date, order, event)).toEqual(expected);
   });
 
   test('평일이지만 디저트메뉴가 없음', () => {
@@ -113,10 +115,7 @@ describe('혜택이 적용되지 않는 케이스 테스트', () => {
     ];
     const event = ['평일 할인'];
 
-    expect(benefitCalculator.getBenefitSummary(date, order, event)).toEqual({
-      totalBenefit: NO_BENEFIT,
-      totalDiscount: NO_DISCOUNT,
-    });
+    expect(benefitCalculator.getBenefitSummary(date, order, event)).toEqual(expected);
   });
 
   test('주말이지만 메인메뉴가 없음', () => {
@@ -127,9 +126,6 @@ describe('혜택이 적용되지 않는 케이스 테스트', () => {
     ];
     const event = ['주말 할인'];
 
-    expect(benefitCalculator.getBenefitSummary(date, order, event)).toEqual({
-      totalBenefit: NO_BENEFIT,
-      totalDiscount: NO_DISCOUNT,
-    });
+    expect(benefitCalculator.getBenefitSummary(date, order, event)).toEqual(expected);
   });
 });
