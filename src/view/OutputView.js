@@ -38,7 +38,7 @@ const OutputView = {
 
   printTotalDiscount(totalDiscount) {
     Console.print(OUTPUT_MESSAGE.totalDiscount);
-    Console.print(`${this.convertToFormattedCurrency(totalDiscount)}원`);
+    Console.print(`${this.convertToFormattedCurrency(-totalDiscount)}원`);
   },
 
   printAmountAfterBenefit(amount) {
