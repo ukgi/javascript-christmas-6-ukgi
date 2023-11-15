@@ -22,9 +22,9 @@ export default class EventPlannerController {
     OutputView.printOrder(date, menu, totalAmount);
 
     const eventList = EventFinder.getEvent(date, totalAmount);
-    OutputView.printGift(this.#giftHandler(eventList));
+    OutputView.printGift(this.#handleGift(eventList));
 
-    const { totalBenefit, totalDiscount } = this.#benefitHandler(date, menu, eventList);
+    const { totalBenefit, totalDiscount } = this.#handleBenefitSummary(date, menu, eventList);
     const expectedAmountAfterDiscount = totalAmount - totalDiscount;
     OutputView.printBenefitSummary(totalBenefit, totalDiscount, expectedAmountAfterDiscount);
 
@@ -68,14 +68,14 @@ export default class EventPlannerController {
     return amount;
   }
 
-  #giftHandler(eventList) {
+  #handleGift(eventList) {
     let gift = INITIAL_GIFT;
     if (eventList.find((event) => event === EVENTS.gift)) gift = GIFT;
 
     return gift;
   }
 
-  #benefitHandler(date, menu, eventList) {
+  #handleBenefitSummary(date, menu, eventList) {
     const { totalBenefit, totalDiscount } = this.#benefitCalculator.getBenefitSummary(
       date,
       menu,
