@@ -1,4 +1,4 @@
-import { VISITE_DATE } from '../constants/conditions.js';
+import { VISITE_DATE } from '../constants/constants.js';
 import { ERROR_MESSAGE } from '../constants/message.js';
 
 export default class DateValidator {

@@ -1,6 +1,6 @@
 import MenuManager from '../lib/MenuManager.js';
 import { DISCOUNT_AMOUNT, EVENTS } from '../constants/benefit.js';
-import { INITIAL_ZERO, NO_DISCOUNT, NO_EVENT } from '../constants/conditions.js';
+import { INITIAL_ZERO, NO_DISCOUNT, NO_EVENT } from '../constants/constants.js';
 import { MENU_CATEGORY } from '../constants/menu.js';
 
 export default class BenefitCalculator {

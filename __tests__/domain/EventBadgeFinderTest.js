@@ -1,5 +1,5 @@
 import BADGE from '../../src/constants/badge';
-import { NO_RESULT_FOUND } from '../../src/constants/conditions';
+import { NO_RESULT_FOUND } from '../../src/constants/constants';
 import EventBadgeFinder from '../../src/domain/EventBadgeFinder';
 
 describe('뱃지 테스트', () => {

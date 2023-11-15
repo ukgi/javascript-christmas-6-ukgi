@@ -1,5 +1,5 @@
 import BADGE from '../constants/badge.js';
-import { NO_RESULT_FOUND, THRESHOLD_AMOUNT } from '../constants/conditions.js';
+import { NO_RESULT_FOUND, THRESHOLD_AMOUNT } from '../constants/constants.js';
 
 export default class EventBadgeFinder {
   static findBadge(totalDiscount) {

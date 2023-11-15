@@ -1,5 +1,5 @@
 import { EVENTS } from '../../src/constants/benefit';
-import { NO_BENEFIT, NO_DISCOUNT } from '../../src/constants/conditions';
+import { NO_BENEFIT, NO_DISCOUNT } from '../../src/constants/constants';
 import BenefitCalculator from '../../src/domain/BenefitCalculator';
 
 describe('혜택 내역 테스트', () => {

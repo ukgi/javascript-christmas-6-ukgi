@@ -6,7 +6,7 @@ import MenuValidator from '../validate/MenuValidator.js';
 import MenuManager from '../lib/MenuManager.js';
 import EventBadgeFinder from '../domain/EventBadgeFinder.js';
 import { EVENTS, GIFT } from '../constants/benefit.js';
-import { INITIAL_GIFT, INITIAL_ZERO } from '../constants/conditions.js';
+import { INITIAL_GIFT, INITIAL_ZERO } from '../constants/constants.js';
 import EventFinder from '../domain/EventFinder.js';
 
 export default class EventPlannerController {

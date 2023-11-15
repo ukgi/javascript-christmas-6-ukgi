@@ -1,5 +1,5 @@
 import { EVENTS } from '../constants/benefit.js';
-import { DAYS, EVENT_DATE, THRESHOLD_AMOUNT } from '../constants/conditions.js';
+import { DAYS, EVENT_DATE, THRESHOLD_AMOUNT } from '../constants/constants.js';
 
 export default class EventFinder {
   static getEvent(date, totalAmount) {
