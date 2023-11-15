@@ -1,5 +1,5 @@
-import BenefitCalculator from './domain/BenefitCalculator.js';
-import EventPlannerController from './controller/EventPlannerController.js';
+import BenefitCalculator from './domain/BenefitCalculator';
+import EventPlannerController from './controller/EventPlannerController';
 
 class App {
   async run() {

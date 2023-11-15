@@ -1,5 +1,5 @@
-import { VISITE_DATE } from '../constants/constants.js';
-import { ERROR_MESSAGE } from '../constants/message.js';
+import { VISITE_DATE } from '../constants/constants';
+import { ERROR_MESSAGE } from '../constants/message';
 
 export default class DateValidator {
   static validate(dateString) {

@@ -1,13 +1,13 @@
 import { Console } from '@woowacourse/mission-utils';
-import InputView from '../view/InputView.js';
-import OutputView from '../view/OutputView.js';
-import DateValidator from '../validate/DateValidator.js';
-import MenuValidator from '../validate/MenuValidator.js';
-import MenuManager from '../lib/MenuManager.js';
-import EventBadgeFinder from '../domain/EventBadgeFinder.js';
-import { EVENTS, GIFT } from '../constants/benefit.js';
-import { INITIAL_GIFT, INITIAL_ZERO } from '../constants/constants.js';
-import EventFinder from '../domain/EventFinder.js';
+import InputView from '../view/InputView';
+import OutputView from '../view/OutputView';
+import DateValidator from '../validate/DateValidator';
+import MenuValidator from '../validate/MenuValidator';
+import MenuManager from '../lib/MenuManager';
+import EventBadgeFinder from '../domain/EventBadgeFinder';
+import { EVENTS, GIFT } from '../constants/benefit';
+import { INITIAL_GIFT, INITIAL_ZERO } from '../constants/constants';
+import EventFinder from '../domain/EventFinder';
 
 export default class EventPlannerController {
   #benefitCalculator;

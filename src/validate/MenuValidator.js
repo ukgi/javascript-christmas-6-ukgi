@@ -1,5 +1,5 @@
-import { ERROR_MESSAGE } from '../constants/message.js';
-import MenuManager from '../lib/MenuManager.js';
+import { ERROR_MESSAGE } from '../constants/message';
+import MenuManager from '../lib/MenuManager';
 
 export default class MenuValidator {
   static validate(menuString) {

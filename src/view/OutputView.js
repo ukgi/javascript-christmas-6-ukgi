@@ -1,6 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
-import { OUTPUT_MESSAGE } from '../constants/message.js';
-import { NO_RESULT_FOUND } from '../constants/constants.js';
+import { OUTPUT_MESSAGE } from '../constants/message';
+import { NO_RESULT_FOUND } from '../constants/constants';
 
 const OutputView = {
   printPlannerStart() {
