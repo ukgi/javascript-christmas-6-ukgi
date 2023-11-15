@@ -7,16 +7,12 @@ const OutputView = {
     Console.print(OUTPUT_MESSAGE.plannerStart);
   },
 
-  printEventBenefitsOnScreen(date) {
+  printOrder(date, orders, amounts) {
     Console.print(`12월 ${date}일에 ${OUTPUT_MESSAGE.preview}`);
-  },
 
-  printMenu(orders) {
     Console.print(OUTPUT_MESSAGE.menu);
     orders.forEach(([menu, count]) => Console.print(`${menu} ${count}개`));
-  },
 
-  printAmounts(amounts) {
     Console.print(OUTPUT_MESSAGE.totalAmount);
     Console.print(`${this.convertToFormattedCurrency(amounts)}원`);
   },
@@ -27,23 +23,19 @@ const OutputView = {
     return Console.print(NO_RESULT_FOUND);
   },
 
-  printBenefit(benefit) {
+  printBenefitSummary(benefit, totalDiscount, expectedAmountAfterDiscount) {
     Console.print(OUTPUT_MESSAGE.benefit);
     if (benefit.length > 0) {
       benefit.forEach(({ event, discount }) => {
         Console.print(`${event}: ${this.convertToFormattedCurrency(-discount)}원`);
       });
     } else Console.print(NO_RESULT_FOUND);
-  },
 
-  printTotalDiscount(totalDiscount) {
     Console.print(OUTPUT_MESSAGE.totalDiscount);
     Console.print(`${this.convertToFormattedCurrency(-totalDiscount)}원`);
-  },
 
-  printAmountAfterBenefit(amount) {
     Console.print(OUTPUT_MESSAGE.expectedAmountAfterDiscount);
-    Console.print(`${this.convertToFormattedCurrency(amount)}원`);
+    Console.print(`${this.convertToFormattedCurrency(expectedAmountAfterDiscount)}원`);
   },
 
   printBadge(badge) {
