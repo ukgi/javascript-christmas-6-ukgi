@@ -5,8 +5,11 @@ describe('이벤트 리스트 반환 테스트', () => {
   test('총 주문금액이 10,000원 미만이면 해당되는 이벤트 없음', () => {
     const date = 4;
     const totalAmount = 9999;
+    const expectedEvent = [];
 
-    expect(EventFinder.getEvent(date, totalAmount)).toEqual([]);
+    const resultFn = () => EventFinder.getEvent(date, totalAmount);
+
+    expect(resultFn()).toEqual(expectedEvent);
   });
   test.each([
     {
@@ -40,20 +43,28 @@ describe('이벤트 리스트 반환 테스트', () => {
       event: [EVENTS.weekend],
     },
   ])('날짜를 전달하면 해당하는 이벤트 반환', ({ date, totalAmount, event }) => {
-    expect(EventFinder.getEvent(date, totalAmount)).toEqual(event);
+    const resultFn = () => EventFinder.getEvent(date, totalAmount);
+
+    expect(resultFn()).toEqual(event);
   });
 
   test('총 주문금액이 120,000원 이상이면 증정 이벤트 당첨', () => {
     const date = 29;
     const totalAmount = 120_000;
+    const expectedEvent = [EVENTS.weekend, EVENTS.gift];
 
-    expect(EventFinder.getEvent(date, totalAmount)).toEqual([EVENTS.weekend, EVENTS.gift]);
+    const resultFn = () => EventFinder.getEvent(date, totalAmount);
+
+    expect(resultFn()).toEqual(expectedEvent);
   });
 
   test('총 주문금액이 120,000원 미만이면 증정 이벤트 미당첨', () => {
     const date = 29;
     const totalAmount = 110_000;
+    const expectedEvent = [EVENTS.weekend];
 
-    expect(EventFinder.getEvent(date, totalAmount)).toEqual([EVENTS.weekend]);
+    const resultFn = () => EventFinder.getEvent(date, totalAmount);
+
+    expect(resultFn()).toEqual(expectedEvent);
   });
 });
