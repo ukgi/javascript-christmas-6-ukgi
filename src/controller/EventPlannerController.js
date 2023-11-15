@@ -27,7 +27,7 @@ export default class EventPlannerController {
     const { totalBenefit, totalDiscount } = this.#handleBenefitSummary(date, menu, eventList);
     const expectedAmountAfterDiscount = totalAmount - totalDiscount;
     OutputView.printBenefitSummary(totalBenefit, totalDiscount, expectedAmountAfterDiscount);
-
+    OutputView.printExpectedAmountAfterDiscount(expectedAmountAfterDiscount);
     OutputView.printBadge(EventBadgeFinder.findBadge(totalDiscount));
   }
 

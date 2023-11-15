@@ -1,6 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 import { OUTPUT_MESSAGE } from '../constants/message';
-import { NO_RESULT_FOUND } from '../constants/constants';
+import { NO_DISCOUNT, NO_RESULT_FOUND } from '../constants/constants';
 
 const OutputView = {
   printPlannerStart() {
@@ -23,7 +23,7 @@ const OutputView = {
     return Console.print(NO_RESULT_FOUND);
   },
 
-  printBenefitSummary(benefit, totalDiscount, expectedAmountAfterDiscount) {
+  printBenefitSummary(benefit, totalDiscount) {
     Console.print(OUTPUT_MESSAGE.benefit);
     if (benefit.length > 0) {
       benefit.forEach(({ event, discount }) => {
@@ -32,8 +32,14 @@ const OutputView = {
     } else Console.print(NO_RESULT_FOUND);
 
     Console.print(OUTPUT_MESSAGE.totalDiscount);
-    Console.print(`${this.convertToFormattedCurrency(-totalDiscount)}원`);
+    Console.print(
+      `${this.convertToFormattedCurrency(
+        totalDiscount === NO_DISCOUNT ? totalDiscount : -totalDiscount,
+      )}원`,
+    );
+  },
 
+  printExpectedAmountAfterDiscount(expectedAmountAfterDiscount) {
     Console.print(OUTPUT_MESSAGE.expectedAmountAfterDiscount);
     Console.print(`${this.convertToFormattedCurrency(expectedAmountAfterDiscount)}원`);
   },
